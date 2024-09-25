@@ -17,17 +17,20 @@ class _HomepageState extends State<Homepage> {
   int value = 0;
 
   void saveData() {
-    if (income.text == "") {
-      print("null");
-    } else {
-      if (_data.get('key') != null) {
-        value = int.parse(_data.get('key'));
-        value = value + int.parse(income.text);
-        _data.put('key', value.toString());
+    setState(() {
+      if (income.text == "") {
+        print("null");
       } else {
-        _data.put('key', income.text);
+        if (_data.get('key') != null) {
+          value = int.parse(_data.get('key'));
+          value += int.parse(income.text);
+          _data.put('key', value.toString());
+        } else {
+          _data.put('key', income.text);
+        }
       }
-    }
+      Navigator.pop(context);
+    });
   }
 
   void addincome() {
@@ -64,7 +67,7 @@ class _HomepageState extends State<Homepage> {
               TextButton(
                 onPressed: saveData,
                 child: Text(
-                  "Save",
+                  "Add",
                   style: TextStyle(
                     color: Colors.green,
                   ),
