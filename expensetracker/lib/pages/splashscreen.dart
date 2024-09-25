@@ -1,4 +1,3 @@
-import 'package:expensetracker/pages/Homepage.dart';
 import 'package:expensetracker/pages/homescreen.dart';
 import 'package:flutter/material.dart';
 
@@ -45,7 +44,7 @@ class _SplashscreenState extends State<Splashscreen> {
               ),
             ),
             Text(
-              "MY EXPENSE",
+              "EXPENSE TRACKER",
               style: TextStyle(
                 color: const Color.fromARGB(255, 83, 192, 87),
                 fontFamily: "Protest",

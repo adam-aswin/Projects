@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
+import 'package:hive/hive.dart';
+
 class Homepage extends StatefulWidget {
   const Homepage({super.key});
 
@@ -10,6 +12,23 @@ class Homepage extends StatefulWidget {
 
 class _HomepageState extends State<Homepage> {
   var scaffoldkey = GlobalKey<ScaffoldState>();
+  TextEditingController income = TextEditingController();
+  final _data = Hive.box('mydata');
+  int value = 0;
+
+  void saveData() {
+    if (income.text == "") {
+      print("null");
+    } else {
+      if (_data.get('key') != null) {
+        value = int.parse(_data.get('key'));
+        value = value + int.parse(income.text);
+        _data.put('key', value.toString());
+      } else {
+        _data.put('key', income.text);
+      }
+    }
+  }
 
   void addincome() {
     setState(() {
@@ -18,12 +37,20 @@ class _HomepageState extends State<Homepage> {
         builder: (BuildContext context) {
           return AlertDialog(
             backgroundColor: Colors.grey[800],
+            title: Text(
+              "ADD INCOME",
+              style: TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
             content: Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(15),
                 color: Colors.grey,
               ),
               child: TextField(
+                controller: income,
                 decoration: InputDecoration(
                   hintText: "Income",
                   enabledBorder:
@@ -33,6 +60,28 @@ class _HomepageState extends State<Homepage> {
                 ),
               ),
             ),
+            actions: [
+              TextButton(
+                onPressed: saveData,
+                child: Text(
+                  "Save",
+                  style: TextStyle(
+                    color: Colors.green,
+                  ),
+                ),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text(
+                  "Cancel",
+                  style: TextStyle(
+                    color: Colors.green,
+                  ),
+                ),
+              ),
+            ],
           );
         },
       );
@@ -53,7 +102,10 @@ class _HomepageState extends State<Homepage> {
                 child: Text(
                   "EXPENSE TRACKER",
                   style: TextStyle(
-                      fontWeight: FontWeight.bold, color: Colors.green[800]),
+                    // fontWeight: FontWeight.bold,
+                    color: Colors.green[800],
+                    fontFamily: "Protest",
+                  ),
                 ),
               ),
             ),
@@ -216,7 +268,9 @@ class _HomepageState extends State<Homepage> {
                                   width: 5,
                                 ),
                                 Text(
-                                  "0",
+                                  _data.get('key') == null
+                                      ? "0"
+                                      : _data.get('key'),
                                   style: TextStyle(
                                       color: Colors.white, fontSize: 20),
                                 )
