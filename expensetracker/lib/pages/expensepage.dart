@@ -14,28 +14,66 @@ class _ExpensepageState extends State<Expensepage> {
   TextEditingController paid = TextEditingController();
   int value = 0;
   List data = [];
+  DateTime current_time = DateTime.now();
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getData();
+  }
 
-  void saveData() {
+  void getData() {
+    data = _data.get('exp');
+  }
+
+  void expensedata() {
     setState(() {
       if (expense.text == "") {
         print("null");
       } else {
-        if (_data.get('exp') != null) {
-          data = _data.get('exp');
-          // value = int.parse();
+        if (_data.get('exponly') != null) {
+          value = int.parse(_data.get('exponly'));
           value += int.parse(expense.text);
-          // data.add(
-          //   {
-          //     "expense":value.toString(),
-          //     "date":
-          //   }
-          // );
+          _data.put('exponly', value.toString());
         } else {
-          _data.put('exp', expense.text);
+          _data.put('exponly', expense.text);
         }
       }
       Navigator.pop(context);
     });
+  }
+
+  void saveData() {
+    setState(() {
+      if (_data.get('exp') != null) {
+        data = _data.get('exp');
+        data.add(
+          {
+            "expense": expense.text,
+            "paid": paid.text,
+            "date":
+                "${current_time.day.toString().padLeft(2, "0")}-${current_time.month.toString().padLeft(2, "0")}-${current_time.year}",
+            "time":
+                "${current_time.hour.toString().padLeft(2, "0")}:${current_time.minute.toString().padLeft(2, "0")}"
+          },
+        );
+        _data.put('exp', data);
+      } else {
+        data = [
+          {
+            "expense": expense.text,
+            "paid": paid.text,
+            "date":
+                "${current_time.day.toString().padLeft(2, "0")}-${current_time.month.toString().padLeft(2, "0")}-${current_time.year}",
+            "time":
+                "${current_time.hour.toString().padLeft(2, "0")}:${current_time.minute.toString().padLeft(2, "0")}"
+          },
+        ];
+        _data.put('exp', data);
+      }
+    });
+    Navigator.pop(context);
+    expensedata();
   }
 
   void expenseAdd() {
@@ -195,7 +233,7 @@ class _ExpensepageState extends State<Expensepage> {
                     height: 10,
                   ),
                   Text(
-                    _data.get('exp') == null ? "0" : _data.get('exp'),
+                    _data.get('exponly') == null ? "0" : _data.get('exponly'),
                     style: TextStyle(color: Colors.white, fontSize: 20),
                   )
                 ],
@@ -225,47 +263,69 @@ class _ExpensepageState extends State<Expensepage> {
                 child: Expanded(
                   child: Column(
                     children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Recent Expense",
-                            style: TextStyle(
-                              fontWeight: FontWeight.w900,
-                              fontSize: 16,
-                            ),
-                          ),
-                          Spacer(),
-                          ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.green,
+                      Container(
+                        margin: EdgeInsets.only(bottom: 20),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Recent Expense",
+                              style: TextStyle(
+                                fontWeight: FontWeight.w900,
+                                fontSize: 16,
                               ),
-                              onPressed: expenseAdd,
-                              child: Row(
-                                children: [
-                                  Icon(
-                                    Icons.add_circle_outline,
-                                    color: Colors.white,
-                                  ),
-                                  SizedBox(
-                                    width: 5,
-                                  ),
-                                  Text(
-                                    "Add",
-                                    style: TextStyle(
+                            ),
+                            Spacer(),
+                            ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.green,
+                                ),
+                                onPressed: expenseAdd,
+                                child: Row(
+                                  children: [
+                                    Icon(
+                                      Icons.add_circle_outline,
                                       color: Colors.white,
                                     ),
-                                  ),
-                                ],
-                              ))
-                        ],
+                                    SizedBox(
+                                      width: 5,
+                                    ),
+                                    Text(
+                                      "Add",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ],
+                                ))
+                          ],
+                        ),
                       ),
                       Expanded(
                         child: ListView.builder(
-                          itemCount: 5,
+                          itemCount: data.length,
                           itemBuilder: (context, index) {
                             return ListTile(
-                              title: Text("data"),
+                              // onLongPress: () {
+                              //   setState(() {
+                              //     data.removeAt(index);
+                              //   });
+                              // },
+                              leading: _data.get('exp') == null
+                                  ? Text("0")
+                                  : Text(
+                                      "₹ ${data[index]["expense"]}",
+                                      style: TextStyle(fontSize: 18),
+                                    ),
+                              title: _data.get('exp') == null
+                                  ? Text("0")
+                                  : Text(data[index]["paid"]),
+                              trailing: Column(
+                                children: [
+                                  Text(data[index]["time"]),
+                                  Text(data[index]["date"]),
+                                ],
+                              ),
                             );
                           },
                         ),
