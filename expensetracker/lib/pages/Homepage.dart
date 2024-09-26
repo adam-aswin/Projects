@@ -15,17 +15,21 @@ class _HomepageState extends State<Homepage> {
   TextEditingController income = TextEditingController();
   final _data = Hive.box('mydata');
   int value = 0;
+  double value1 = 0;
+  double value2 = 0;
+  double sum = 0;
   List datas = [];
   Map? get;
   List values = [];
-  int total = 0;
+  String total = "";
 
-  // @override
-  // void initState() {
-  //   // TODO: implement initState
-  //   super.initState();
-  //   getData();
-  // }
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getData();
+    balance();
+  }
 
   void saveData() {
     setState(() {
@@ -44,18 +48,19 @@ class _HomepageState extends State<Homepage> {
     });
   }
 
-  // void getData() {
-  //   datas = _data.get('exp');
+  void getData() {
+    if (_data.get('exponly') == null) {
+      null;
+    } else {
+      total = _data.get('exponly');
+    }
+  }
 
-  //   for (get in datas) {
-  //     // print(get!["expense"]);
-  //     values.add(int.parse(get!["expense"].toString()));
-  //   }
-  //   for (total in values) {
-  //     total += total;
-  //   }
-  //   print(total);
-  // }
+  void balance() {
+    value2 = double.parse(total);
+    value1 = double.parse(_data.get('key'));
+    sum = value1 - value2;
+  }
 
   void addincome() {
     setState(() {
@@ -248,7 +253,7 @@ class _HomepageState extends State<Homepage> {
                                 width: 5,
                               ),
                               Text(
-                                total.toString(),
+                                total,
                                 style: TextStyle(
                                     color: Colors.white, fontSize: 23),
                               )
@@ -329,7 +334,7 @@ class _HomepageState extends State<Homepage> {
                             width: 5,
                           ),
                           Text(
-                            "0",
+                            sum.toString(),
                             style: TextStyle(color: Colors.white, fontSize: 15),
                           )
                         ],

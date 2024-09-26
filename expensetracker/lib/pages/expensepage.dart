@@ -1,5 +1,9 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:image_picker/image_picker.dart';
 
 class Expensepage extends StatefulWidget {
   const Expensepage({super.key});
@@ -15,6 +19,10 @@ class _ExpensepageState extends State<Expensepage> {
   int value = 0;
   List data = [];
   DateTime current_time = DateTime.now();
+  File? _image;
+  String? base;
+  final ImagePicker _picker = ImagePicker();
+
   @override
   void initState() {
     // TODO: implement initState
@@ -22,28 +30,80 @@ class _ExpensepageState extends State<Expensepage> {
     getData();
   }
 
+  void gallery() async {
+    final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
+    setState(() {
+      if (pickedFile != null) {
+        _image = File(pickedFile.path);
+        Navigator.pop(context);
+      } else {
+        print("null");
+      }
+    });
+  }
+
+  void pickimage() async {
+    if (_image == null) {
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              backgroundColor: const Color.fromARGB(255, 247, 230, 230),
+              title: Text(
+                "Choose a File",
+                style: TextStyle(color: Colors.black),
+              ),
+              actions: [
+                TextButton(
+                  onPressed: gallery,
+                  child: Text(
+                    "Add",
+                    style: TextStyle(color: Colors.blueAccent[700]),
+                  ),
+                ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: Text(
+                    "Cancel",
+                    style: TextStyle(color: Colors.blueAccent[700]),
+                  ),
+                ),
+              ],
+            );
+          });
+    } else {
+      print("null");
+    }
+  }
+
   void getData() {
-    data = _data.get('exp');
+    if (_data.get('exp') == null) {
+      null;
+    } else {
+      data = _data.get('exp');
+    }
   }
 
   void expensedata() {
     setState(() {
-      if (expense.text == "") {
-        print("null");
+      if (_data.get('exponly') != null) {
+        value = int.parse(_data.get('exponly'));
+        value += int.parse(expense.text);
+        _data.put('exponly', value.toString());
       } else {
-        if (_data.get('exponly') != null) {
-          value = int.parse(_data.get('exponly'));
-          value += int.parse(expense.text);
-          _data.put('exponly', value.toString());
-        } else {
-          _data.put('exponly', expense.text);
-        }
+        _data.put('exponly', expense.text);
       }
-      Navigator.pop(context);
     });
   }
 
-  void saveData() {
+  void saveData() async {
+    if (_image != null) {
+      final bytes = await _image!.readAsBytes();
+      final base64img = base64Encode(bytes);
+      base = base64img;
+    }
     setState(() {
       if (_data.get('exp') != null) {
         data = _data.get('exp');
@@ -51,6 +111,7 @@ class _ExpensepageState extends State<Expensepage> {
           {
             "expense": expense.text,
             "paid": paid.text,
+            "bill": base,
             "date":
                 "${current_time.day.toString().padLeft(2, "0")}-${current_time.month.toString().padLeft(2, "0")}-${current_time.year}",
             "time":
@@ -63,6 +124,7 @@ class _ExpensepageState extends State<Expensepage> {
           {
             "expense": expense.text,
             "paid": paid.text,
+            "bill": base,
             "date":
                 "${current_time.day.toString().padLeft(2, "0")}-${current_time.month.toString().padLeft(2, "0")}-${current_time.year}",
             "time":
@@ -91,7 +153,7 @@ class _ExpensepageState extends State<Expensepage> {
               ),
             ),
             content: Container(
-              height: 250,
+              height: 280,
               child: Column(
                 children: [
                   Container(
@@ -150,12 +212,33 @@ class _ExpensepageState extends State<Expensepage> {
                         ),
                         Spacer(),
                         IconButton(
-                          onPressed: () {},
+                          onPressed: pickimage,
                           icon: Icon(Icons.add_circle_outline),
                         )
                       ],
                     ),
                   ),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  Container(
+                    height: 70,
+                    width: 60,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(
+                        8,
+                      ),
+                      color: Colors.grey,
+                    ),
+                    child: _image != null
+                        ? Image.file(
+                            _image!,
+                            fit: BoxFit.cover,
+                          )
+                        : Center(
+                            child: Icon(Icons.insert_drive_file_outlined),
+                          ),
+                  )
                 ],
               ),
             ),
