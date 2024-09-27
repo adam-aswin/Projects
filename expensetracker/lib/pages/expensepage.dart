@@ -117,6 +117,7 @@ class _ExpensepageState extends State<Expensepage> {
             "expense": expense.text,
             "paid": paid.text,
             "bill": base,
+            "day": "${current_time.day.toString()}",
             "date":
                 "${current_time.day.toString().padLeft(2, "0")}-${current_time.month.toString().padLeft(2, "0")}-${current_time.year}",
             "time":
@@ -130,6 +131,7 @@ class _ExpensepageState extends State<Expensepage> {
             "expense": expense.text,
             "paid": paid.text,
             "bill": base,
+            "day": "${current_time.day.toString()}",
             "date":
                 "${current_time.day.toString().padLeft(2, "0")}-${current_time.month.toString().padLeft(2, "0")}-${current_time.year}",
             "time":

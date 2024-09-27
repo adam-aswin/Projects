@@ -18,7 +18,7 @@ class _HomepageState extends State<Homepage> {
   int value = 0;
   double value1 = 0;
   double value2 = 0;
-  double sum = 0;
+  double? sum;
   List datas = [];
   Map? get;
   List values = [];
@@ -44,16 +44,17 @@ class _HomepageState extends State<Homepage> {
           _data.put('key', income.text);
         }
       }
+      if (_data.get('key') != null) {
+        sum = double.parse(_data.get('key'));
+      } else {
+        sum = 0;
+      }
       Navigator.pop(context);
     });
   }
 
   void getData() {
-    if (_data.get('key') != null) {
-      sum = double.parse(_data.get('key'));
-    } else {
-      sum = 0;
-    }
+    sum = double.parse(_data.get('key'));
     if (_data.get('exponly') == null) {
       null;
     } else {

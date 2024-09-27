@@ -1,4 +1,8 @@
+import 'dart:convert';
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 
 class Statementpage extends StatefulWidget {
   const Statementpage({super.key});
@@ -8,6 +12,22 @@ class Statementpage extends StatefulWidget {
 }
 
 class _StatementpageState extends State<Statementpage> {
+  final _data = Hive.box('mydata');
+  List datetime = [];
+  Uint8List? image;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getData();
+  }
+
+  void getData() {
+    datetime = _data.get('exp');
+
+    print(datetime);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,11 +50,11 @@ class _StatementpageState extends State<Statementpage> {
         height: MediaQuery.of(context).size.height,
         padding: EdgeInsets.all(20),
         child: ListView.builder(
-          itemCount: 5,
+          itemCount: datetime.length,
           itemBuilder: (context, index) {
             return Container(
               width: MediaQuery.of(context).size.width,
-              height: 100,
+              height: 150,
               margin: EdgeInsets.only(bottom: 15),
               padding: EdgeInsets.only(
                 left: 20,
@@ -45,10 +65,11 @@ class _StatementpageState extends State<Statementpage> {
                 color: Colors.grey,
               ),
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Container(
-                    height: 70,
-                    width: 60,
+                    height: 90,
+                    width: 80,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(15),
                       color: Colors.grey[900],
@@ -56,16 +77,95 @@ class _StatementpageState extends State<Statementpage> {
                     child: Column(
                       children: [
                         Text(
-                          "6",
+                          _data.get('exp') != null
+                              ? datetime[index]["day"]
+                              : null,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontFamily: "Protest",
+                            fontSize: 40,
+                          ),
+                        ),
+                        Divider(
+                          height: 0,
+                        ),
+                        SizedBox(
+                          height: 3,
+                        ),
+                        Text(
+                          _data.get('exp') != null
+                              ? datetime[index]["time"]
+                              : null,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontFamily: "Protest",
+                            fontSize: 15,
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                  Container(
+                    height: 90,
+                    width: 110,
+                    padding: EdgeInsets.only(
+                      top: 5,
+                      bottom: 5,
+                    ),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: Colors.grey[900],
+                    ),
+                    child: Column(
+                      children: [
+                        Text(
+                          _data.get('exp') != null
+                              ? datetime[index]["paid"]
+                              : null,
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 30,
+                            fontWeight: FontWeight.bold,
+                            // fontFamily: "Protest",
                           ),
                         ),
-                        Divider(),
+                        Divider(
+                          height: 5,
+                        ),
+                        // SizedBox(
+                        //   height: 20,
+                        // ),
+                        Text(
+                          "₹ ${_data.get('exp') != null ? datetime[index]["expense"] : null}",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                       ],
                     ),
-                  )
+                  ),
+                  Container(
+                    height: 90,
+                    width: 70,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                      color: Colors.grey[900],
+                    ),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(8),
+                      child: datetime[index]["bill"] != null
+                          ? Image.memory(
+                              image = base64Decode(datetime[index]["bill"]),
+                              fit: BoxFit.cover,
+                            )
+                          : Icon(
+                              Icons.insert_drive_file_outlined,
+                              color: Colors.white,
+                            ),
+                    ),
+                  ),
                 ],
               ),
             );
