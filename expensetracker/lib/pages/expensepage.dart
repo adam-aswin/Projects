@@ -55,7 +55,11 @@ class _ExpensepageState extends State<Expensepage> {
               ),
               actions: [
                 TextButton(
-                  onPressed: gallery,
+                  onPressed: () {
+                    setState(() {
+                      gallery();
+                    });
+                  },
                   child: Text(
                     "Add",
                     style: TextStyle(color: Colors.blueAccent[700]),
@@ -84,6 +88,7 @@ class _ExpensepageState extends State<Expensepage> {
     } else {
       data = _data.get('exp');
     }
+    print(data);
   }
 
   void expensedata() {
@@ -148,7 +153,7 @@ class _ExpensepageState extends State<Expensepage> {
             title: Text(
               "ADD EXPENSE",
               style: TextStyle(
-                color: Colors.black,
+                color: Colors.white,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -212,7 +217,11 @@ class _ExpensepageState extends State<Expensepage> {
                         ),
                         Spacer(),
                         IconButton(
-                          onPressed: pickimage,
+                          onPressed: () {
+                            setState(() {
+                              pickimage();
+                            });
+                          },
                           icon: Icon(Icons.add_circle_outline),
                         )
                       ],
@@ -255,6 +264,9 @@ class _ExpensepageState extends State<Expensepage> {
               TextButton(
                 onPressed: () {
                   Navigator.pop(context);
+                  expense.clear();
+                  paid.clear();
+                  _image == null;
                 },
                 child: Text(
                   "Cancel",
@@ -279,6 +291,7 @@ class _ExpensepageState extends State<Expensepage> {
       backgroundColor: const Color.fromARGB(255, 44, 44, 44),
       body: Container(
         width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -336,85 +349,85 @@ class _ExpensepageState extends State<Expensepage> {
             ),
             Expanded(
               child: Container(
-                margin: EdgeInsets.only(left: 30, right: 30, top: 15),
+                margin:
+                    EdgeInsets.only(left: 30, right: 30, top: 15, bottom: 30),
                 padding: EdgeInsets.all(15),
-                height: 400,
+                height: 300,
+                width: MediaQuery.of(context).size.width,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15),
                   color: Colors.white,
                 ),
-                child: Expanded(
-                  child: Column(
-                    children: [
-                      Container(
-                        margin: EdgeInsets.only(bottom: 20),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Text(
-                              "Recent Expense",
-                              style: TextStyle(
-                                fontWeight: FontWeight.w900,
-                                fontSize: 16,
-                              ),
+                child: Column(
+                  children: [
+                    Container(
+                      margin: EdgeInsets.only(bottom: 20),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Recent Expense",
+                            style: TextStyle(
+                              fontWeight: FontWeight.w900,
+                              fontSize: 16,
                             ),
-                            Spacer(),
-                            ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.green,
-                                ),
-                                onPressed: expenseAdd,
-                                child: Row(
-                                  children: [
-                                    Icon(
-                                      Icons.add_circle_outline,
+                          ),
+                          Spacer(),
+                          ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.green,
+                              ),
+                              onPressed: expenseAdd,
+                              child: Row(
+                                children: [
+                                  Icon(
+                                    Icons.add_circle_outline,
+                                    color: Colors.white,
+                                  ),
+                                  SizedBox(
+                                    width: 5,
+                                  ),
+                                  Text(
+                                    "Add",
+                                    style: TextStyle(
                                       color: Colors.white,
                                     ),
-                                    SizedBox(
-                                      width: 5,
-                                    ),
-                                    Text(
-                                      "Add",
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                  ],
-                                ))
-                          ],
-                        ),
-                      ),
-                      Expanded(
-                        child: ListView.builder(
-                          itemCount: data.length,
-                          itemBuilder: (context, index) {
-                            return ListTile(
-                              // onLongPress: () {
-                              //   setState(() {
-                              //     data.removeAt(index);
-                              //   });
-                              // },
-                              leading: _data.get('exp') == null
-                                  ? Text("0")
-                                  : Text(
-                                      "₹ ${data[index]["expense"]}",
-                                      style: TextStyle(fontSize: 18),
-                                    ),
-                              title: _data.get('exp') == null
-                                  ? Text("0")
-                                  : Text(data[index]["paid"]),
-                              trailing: Column(
-                                children: [
-                                  Text(data[index]["time"]),
-                                  Text(data[index]["date"]),
+                                  ),
                                 ],
-                              ),
-                            );
-                          },
-                        ),
+                              ))
+                        ],
                       ),
-                    ],
-                  ),
+                    ),
+                    Expanded(
+                      child: ListView.builder(
+                        itemCount: data.length,
+                        itemBuilder: (context, index) {
+                          return ListTile(
+                            // onLongPress: () {
+                            //   setState(() {
+                            //     data.removeAt(index);
+                            //   });
+                            // },
+                            leading: _data.get('exp') == null
+                                ? Text("0")
+                                : Text(
+                                    "₹ ${data[index]["expense"]}",
+                                    style: TextStyle(fontSize: 18),
+                                  ),
+                            title: _data.get('exp') == null
+                                ? Text("0")
+                                : Text(data[index]["paid"]),
+                            trailing: Column(
+                              children: [
+                                Text(data[index]["time"]),
+                                Text(data[index]["date"]),
+                              ],
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),

@@ -1,3 +1,4 @@
+import 'package:expensetracker/pages/statementpage.dart';
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
@@ -28,7 +29,6 @@ class _HomepageState extends State<Homepage> {
     // TODO: implement initState
     super.initState();
     getData();
-    balance();
   }
 
   void saveData() {
@@ -49,17 +49,28 @@ class _HomepageState extends State<Homepage> {
   }
 
   void getData() {
+    if (_data.get('key') != null) {
+      sum = double.parse(_data.get('key'));
+    } else {
+      sum = 0;
+    }
     if (_data.get('exponly') == null) {
       null;
     } else {
       total = _data.get('exponly');
+      balance();
     }
   }
 
   void balance() {
-    value2 = double.parse(total);
-    value1 = double.parse(_data.get('key'));
-    sum = value1 - value2;
+    if (_data.get('key') != null || _data.get('exponly') != null) {
+      value2 = double.parse(total);
+      value1 = double.parse(_data.get('key'));
+
+      sum = value1 - value2;
+    } else {
+      null;
+    }
   }
 
   void addincome() {
@@ -162,7 +173,13 @@ class _HomepageState extends State<Homepage> {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.black,
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => Statementpage(),
+                    ),
+                  );
+                },
                 child: Text(
                   "Statement",
                   style: TextStyle(
@@ -179,11 +196,15 @@ class _HomepageState extends State<Homepage> {
         leading: IconButton(
           onPressed: () => scaffoldkey.currentState?.openDrawer(),
           icon: Container(
-            height: 28,
-            width: 28,
-            child: Image.asset(
-              "./lib/icons/multiply-sign.png",
-              fit: BoxFit.cover,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(100),
+              border: Border.all(
+                color: Colors.white,
+                width: 1,
+              ),
+            ),
+            child: Icon(
+              Icons.more_horiz,
             ),
           ),
         ),
@@ -253,7 +274,7 @@ class _HomepageState extends State<Homepage> {
                                 width: 5,
                               ),
                               Text(
-                                total,
+                                _data.get('exponly') != null ? total : "0",
                                 style: TextStyle(
                                     color: Colors.white, fontSize: 23),
                               )
