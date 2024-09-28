@@ -75,16 +75,32 @@ class _StatementpageState extends State<Statementpage> {
                       color: Colors.grey[900],
                     ),
                     child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Text(
-                          _data.get('exp') != null
-                              ? datetime[index]["day"]
-                              : null,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontFamily: "Protest",
-                            fontSize: 40,
-                          ),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text(
+                              _data.get('exp') != null
+                                  ? datetime[index]["day"]
+                                  : null,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontFamily: "Protest",
+                                fontSize: 36,
+                              ),
+                            ),
+                            Text(
+                              _data.get('exp') != null
+                                  ? datetime[index]["mmyyyy"]
+                                  : null,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontFamily: "Protest",
+                                fontSize: 10,
+                              ),
+                            ),
+                          ],
                         ),
                         Divider(
                           height: 0,
@@ -105,53 +121,43 @@ class _StatementpageState extends State<Statementpage> {
                       ],
                     ),
                   ),
-                  Container(
-                    height: 90,
-                    width: 110,
-                    padding: EdgeInsets.only(
-                      top: 5,
-                      bottom: 5,
-                    ),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: Colors.grey[900],
-                    ),
-                    child: Column(
-                      children: [
-                        Text(
-                          _data.get('exp') != null
-                              ? datetime[index]["paid"]
-                              : null,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 30,
-                            fontWeight: FontWeight.bold,
-                            // fontFamily: "Protest",
-                          ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        _data.get('exp') != null
+                            ? datetime[index]["paid"]
+                            : null,
+                        style: TextStyle(
+                          color: Colors.grey[900],
+                          fontSize: 20,
+                          // fontWeight: FontWeight.bold,
+                          fontFamily: "Protest",
                         ),
-                        Divider(
-                          height: 5,
+                      ),
+                      Divider(
+                        height: 5,
+                      ),
+                      // SizedBox(
+                      //   height: 20,
+                      // ),
+                      Text(
+                        "₹ ${_data.get('exp') != null ? datetime[index]["expense"] : null}",
+                        style: TextStyle(
+                          color: Colors.grey[900],
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
                         ),
-                        // SizedBox(
-                        //   height: 20,
-                        // ),
-                        Text(
-                          "₹ ${_data.get('exp') != null ? datetime[index]["expense"] : null}",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                   Container(
                     height: 90,
                     width: 70,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8),
-                      color: Colors.grey[900],
+                      color: Colors.grey[600],
                     ),
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(8),

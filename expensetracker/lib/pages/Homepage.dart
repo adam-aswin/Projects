@@ -54,7 +54,11 @@ class _HomepageState extends State<Homepage> {
   }
 
   void getData() {
-    sum = double.parse(_data.get('key'));
+    if (_data.get('key') != null) {
+      sum = double.parse(_data.get('key'));
+    } else {
+      sum = 0;
+    }
     if (_data.get('exponly') == null) {
       null;
     } else {

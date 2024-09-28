@@ -50,7 +50,7 @@ class _ExpensepageState extends State<Expensepage> {
             return AlertDialog(
               backgroundColor: const Color.fromARGB(255, 247, 230, 230),
               title: Text(
-                "Choose a File",
+                "Add a Bill",
                 style: TextStyle(color: Colors.black),
               ),
               actions: [
@@ -118,10 +118,12 @@ class _ExpensepageState extends State<Expensepage> {
             "paid": paid.text,
             "bill": base,
             "day": "${current_time.day.toString()}",
+            "mmyyyy":
+                "${current_time.month.toString().padLeft(2, "0")}/${current_time.year.toString().padLeft(2, "0")}",
             "date":
                 "${current_time.day.toString().padLeft(2, "0")}-${current_time.month.toString().padLeft(2, "0")}-${current_time.year}",
             "time":
-                "${current_time.hour.toString().padLeft(2, "0")}:${current_time.minute.toString().padLeft(2, "0")}"
+                "${current_time.hour > 12 ? (current_time.hour - 12).toString().padLeft(2, "0") : current_time.hour.toString().padLeft(2, "0")}:${current_time.minute.toString().padLeft(2, "0")}"
           },
         );
         _data.put('exp', data);
@@ -132,10 +134,12 @@ class _ExpensepageState extends State<Expensepage> {
             "paid": paid.text,
             "bill": base,
             "day": "${current_time.day.toString()}",
+            "mmyyyy":
+                "${current_time.month.toString().padLeft(2, "0")}/${current_time.year.toString().padLeft(2, "0")}",
             "date":
                 "${current_time.day.toString().padLeft(2, "0")}-${current_time.month.toString().padLeft(2, "0")}-${current_time.year}",
             "time":
-                "${current_time.hour.toString().padLeft(2, "0")}:${current_time.minute.toString().padLeft(2, "0")}"
+                "${current_time.hour > 12 ? (current_time.hour - 12).toString().padLeft(2, "0") : current_time.hour.toString().padLeft(2, "0")}:${current_time.minute.toString().padLeft(2, "0")}"
           },
         ];
         _data.put('exp', data);
