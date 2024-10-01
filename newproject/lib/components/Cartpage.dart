@@ -10,8 +10,12 @@ class Cartpage extends StatefulWidget {
 class _CartpageState extends State<Cartpage> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Text("Cart"),
+    return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 209, 190, 178),
+      appBar: AppBar(
+        title: Text("Cart"),
+        centerTitle: true,
+      ),
     );
   }
 }

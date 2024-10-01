@@ -67,7 +67,10 @@ flutter:
     - images/iced_americano.png
     - images/latte.png
     - images/latte_macchiato.png
+    - images/caramel_macchiato.png
     - images/espresso.png
+    - lib/icons/cart.png
+    - lib/icons/cart (1).png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
@@ -80,10 +83,10 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
+  fonts:
+    - family: Kanit
+      fonts:
+        - asset: fonts/Kanit-Regular.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro

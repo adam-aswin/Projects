@@ -11,38 +11,50 @@ class _ShoppageState extends State<Shoppage> {
   List _coffee = [
     {
       "name": "Caffe Americano",
+      "des":
+          "An Americano coffee is distinct in aroma and mouthfeel. The aroma is characterized by a mild, roasted fragrance, while the flavor is smooth and bold.",
       "price": 270,
       "img": "./images/americano.png",
       "qty": 0,
     },
     {
       "name": "Cappuccino",
+      "des":
+          "A cappuccino is a beloved espresso-based hot coffee drink made with layering of espresso, steamed milk, and milk foam on top.",
       "price": 280,
       "img": "./images/cappuccino.png",
       "qty": 0,
     },
     {
+      "name": "Caffe Latte",
+      "des":
+          "Caffè latte is a milk coffee that boasts a silky layer of foam as a real highlight of the drink.",
+      "price": 240,
+      "img": "./images/latte.png",
+      "qty": 0,
+    },
+    {
       "name": "Doppio Espresso",
+      "des":
+          " Espresso is thicker than regular coffee and has a layer of “crema” on top, which results from air bubbles mixing with the coffee's oils.",
       "price": 260,
       "img": "./images/espresso.png",
       "qty": 0,
     },
     {
       "name": "Iced Caffè Americano",
+      "des":
+          "An Iced Americano is a refreshing coffee beverage made with espresso and cold water, served over ice.",
       "price": 300,
       "img": "./images/iced_americano.png",
       "qty": 0,
     },
     {
-      "name": "Latte Macchiato",
-      "price": 250,
-      "img": "./images/latte_macchiato.png",
-      "qty": 0,
-    },
-    {
-      "name": "Caffe Latte",
-      "price": 240,
-      "img": "./images/latte.png",
+      "name": "Caramel Macchiato",
+      "des":
+          "The defining characteristic of a caramel macchiato is the generous drizzle of caramel sauce over the top.",
+      "price": 350,
+      "img": "./images/caramel_macchiato.png",
       "qty": 0,
     },
   ];
@@ -81,52 +93,99 @@ class _ShoppageState extends State<Shoppage> {
             // SizedBox(
             //   height: 30,
             // ),
+
             Expanded(
-              child: Container(
-                padding: EdgeInsets.only(left: 15, right: 15),
-                child: Expanded(
-                  child: GridView.builder(
-                      padding: EdgeInsets.only(top: 30),
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        crossAxisSpacing: 10,
-                        mainAxisSpacing: 10,
-                        childAspectRatio: 2.5 / 3,
-                      ),
-                      itemCount: 6,
-                      itemBuilder: (context, index) {
-                        return Container(
-                          height: 100,
-                          width: 100,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15),
-                              color: Colors.white,
-                              boxShadow: [
-                                BoxShadow(
-                                    color:
-                                        const Color.fromARGB(255, 116, 81, 69),
-                                    blurRadius: 5,
-                                    spreadRadius: 0,
-                                    offset: Offset(5, 5)),
-                              ]),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Container(
-                                margin: EdgeInsets.only(top: 10),
-                                height: 130,
-                                width: 130,
-                                child: Image.asset(
-                                  _coffee[index]["img"],
-                                  fit: BoxFit.contain,
-                                ),
-                              )
-                            ],
+              child: GridView.builder(
+                  padding:
+                      EdgeInsets.only(top: 30, left: 15, right: 15, bottom: 15),
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 10,
+                    mainAxisSpacing: 10,
+                    childAspectRatio: 2.3 / 3,
+                  ),
+                  itemCount: 6,
+                  itemBuilder: (context, index) {
+                    return Container(
+                      height: 100,
+                      width: 100,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        color: Colors.white,
+                        boxShadow: [
+                          BoxShadow(
+                            color: const Color.fromARGB(255, 116, 81, 69),
+                            blurRadius: 5,
+                            spreadRadius: 0,
+                            offset: Offset(5, 5),
                           ),
-                        );
-                      }),
-                ),
-              ),
+                        ],
+                      ),
+                      child: Container(
+                        padding: EdgeInsets.all(8),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              height: 130,
+                              width: 230,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(14),
+                                color: const Color.fromARGB(255, 209, 190, 178),
+                              ),
+                              child: Image.asset(
+                                _coffee[index]["img"],
+                                height: 120,
+                                width: 120,
+                              ),
+                            ),
+                            Text(
+                              _coffee[index]["name"],
+                              style: TextStyle(
+                                fontFamily: "Kanit",
+                                fontWeight: FontWeight.bold,
+                                fontSize: 15.2,
+                              ),
+                            ),
+                            Text(
+                              _coffee[index]["des"],
+                              maxLines: 2,
+                              style: TextStyle(
+                                color: Colors.black54,
+                                fontSize: 10,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 15,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "₹ ${_coffee[index]["price"].toString()}",
+                                  style: TextStyle(
+                                    fontFamily: "Kanit",
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 15.2,
+                                  ),
+                                ),
+                                GestureDetector(
+                                  onTap: () {},
+                                  child: Image.asset(
+                                    "./lib/icons/cart (1).png",
+                                    height: 25,
+                                    width: 25,
+                                  ),
+                                )
+                              ],
+                            )
+                          ],
+                        ),
+                      ),
+                    );
+                  }),
             ),
           ],
         ),
