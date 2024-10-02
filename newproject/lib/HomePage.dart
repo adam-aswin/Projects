@@ -22,7 +22,7 @@ class _HomepageState extends State<Homepage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey.shade300,
+      backgroundColor: const Color.fromARGB(255, 209, 190, 178),
       bottomNavigationBar: Botttomnavigation(
         onTabChange: (index) => changetab(index),
       ),

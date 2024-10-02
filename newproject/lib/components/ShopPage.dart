@@ -58,6 +58,8 @@ class _ShoppageState extends State<Shoppage> {
       "qty": 0,
     },
   ];
+  List cart = [];
+  bool isAdd = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -104,7 +106,7 @@ class _ShoppageState extends State<Shoppage> {
                     mainAxisSpacing: 10,
                     childAspectRatio: 2.3 / 3,
                   ),
-                  itemCount: 6,
+                  itemCount: _coffee.length,
                   itemBuilder: (context, index) {
                     return Container(
                       height: 100,
@@ -172,7 +174,18 @@ class _ShoppageState extends State<Shoppage> {
                                   ),
                                 ),
                                 GestureDetector(
-                                  onTap: () {},
+                                  onTap: () {
+                                    setState(() {
+                                      _coffee[index]["qty"]++;
+                                      if (_coffee[index]["qty"] > 1) {
+                                        _coffee[index]["qty"]--;
+                                      } else {
+                                        cart.add(_coffee[index]);
+                                      }
+                                      
+                                      print(cart);
+                                    });
+                                  },
                                   child: Image.asset(
                                     "./lib/icons/cart (1).png",
                                     height: 25,

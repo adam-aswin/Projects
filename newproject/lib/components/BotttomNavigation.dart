@@ -15,7 +15,7 @@ class Botttomnavigation extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         haptic: true,
         color: Colors.grey,
-        tabBorderRadius: 5,
+        tabBorderRadius: 15,
         tabBackgroundColor: Colors.white,
         gap: 5,
         tabs: [
