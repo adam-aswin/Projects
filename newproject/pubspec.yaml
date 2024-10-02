@@ -73,6 +73,8 @@ flutter:
     - images/espresso.png
     - lib/icons/cart.png
     - lib/icons/cart (1).png
+    - images/coffee (copy).jpg
+    - lib/icons/add-button.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

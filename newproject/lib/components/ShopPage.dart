@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 
 class Shoppage extends StatefulWidget {
   const Shoppage({super.key});
@@ -60,6 +61,8 @@ class _ShoppageState extends State<Shoppage> {
   ];
   List cart = [];
   bool isAdd = false;
+
+  final _coffees = Hive.box('coffees');
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -182,7 +185,7 @@ class _ShoppageState extends State<Shoppage> {
                                       } else {
                                         cart.add(_coffee[index]);
                                       }
-                                      
+                                      _coffees.put('key', cart);
                                       print(cart);
                                     });
                                   },
