@@ -186,14 +186,27 @@ class _ShoppageState extends State<Shoppage> {
                                         cart.add(_coffee[index]);
                                       }
                                       _coffees.put('key', cart);
+                                      isAdd = !isAdd;
+
                                       print(cart);
                                     });
                                   },
-                                  child: Image.asset(
-                                    "./lib/icons/cart (1).png",
-                                    height: 25,
-                                    width: 25,
-                                  ),
+                                  child: _coffee[index]["qty"] == 0
+                                      ? Image.asset(
+                                          "./lib/icons/cart (1).png",
+                                          height: 25,
+                                          width: 25,
+                                        )
+                                      : Image.asset(
+                                          "./lib/icons/checklist.png",
+                                          height: 22,
+                                          width: 22,
+                                        ),
+                                  // child: Image.asset(
+                                  //   "./lib/icons/cart (1).png",
+                                  //   height: 25,
+                                  //   width: 25,
+                                  // ),
                                 )
                               ],
                             )

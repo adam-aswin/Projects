@@ -1,1 +1,0 @@
-const Color.fromARGB(255, 184, 115, 50)
