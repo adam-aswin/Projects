@@ -186,7 +186,7 @@ class _ShoppageState extends State<Shoppage> {
                                         cart.add(_coffee[index]);
                                       }
                                       _coffees.put('key', cart);
-                                      isAdd = !isAdd;
+                                      isAdd = true;
 
                                       print(cart);
                                     });

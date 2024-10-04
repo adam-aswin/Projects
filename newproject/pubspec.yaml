@@ -38,6 +38,8 @@ dependencies:
   google_nav_bar: ^5.0.6
   hive: ^2.2.3
   hive_flutter: ^1.1.0
+  slider_button: ^2.1.0
+  lottie: ^3.1.2
 
 dev_dependencies:
   flutter_test:
@@ -78,6 +80,7 @@ flutter:
     - lib/icons/subtraction.png
     - lib/icons/subtraction (1).png
     - lib/icons/checklist.png
+    - lib/Lottie/Animation - 1728035840351.json
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

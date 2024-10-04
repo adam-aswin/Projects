@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:lottie/lottie.dart';
+import 'package:slider_button/slider_button.dart';
 
 class Cartpage extends StatefulWidget {
   const Cartpage({super.key});
@@ -68,8 +70,9 @@ class _CartpageState extends State<Cartpage> {
               Expanded(
                 child: ListView.builder(
                   padding:
-                      EdgeInsets.only(top: 10, left: 15, right: 15, bottom: 10),
+                      EdgeInsets.only(top: 10, left: 15, right: 15, bottom: 15),
                   // physics: NeverScrollableScrollPhysics(),
+                  // shrinkWrap: true,
                   itemCount: coffee.length,
                   itemBuilder: (context, index) {
                     return Container(
@@ -304,6 +307,62 @@ class _CartpageState extends State<Cartpage> {
                       ],
                     )
                   ],
+                ),
+              ),
+              SizedBox(
+                height: 15,
+              ),
+              SliderButton(
+                buttonColor: Colors.white,
+                backgroundColor: Colors.green,
+                action: () async {
+                  return showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        backgroundColor: Colors.white,
+                        content: Lottie.asset(
+                            "./lib/Lottie/Animation - 1728035840351.json"),
+                        // actions: [
+                        //   TextButton(
+                        //     onPressed: () {
+                        //       Navigator.pop(context);
+                        //     },
+                        //     child: Text("Ok"),
+                        //   ),
+                        // ],
+                      );
+                    },
+                  );
+                },
+                label: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      width: 25,
+                    ),
+                    Text(
+                      "Slide to Pay |",
+                      style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(
+                      "₹ ${((sum) + (sum * 5 / 100)).toString()}",
+                      style: TextStyle(
+                        fontFamily: "Kanit",
+                        fontWeight: FontWeight.bold,
+                        fontSize: 15.2,
+                      ),
+                    ),
+                  ],
+                ),
+                baseColor: Colors.white,
+                highlightedColor: Colors.black,
+                icon: Icon(
+                  Icons.arrow_forward_ios_rounded,
+                  color: Colors.green,
                 ),
               )
             ],
