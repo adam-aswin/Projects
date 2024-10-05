@@ -16,24 +16,28 @@ class _LoginpageState extends State<Loginpage> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
       ),
-      body: Stack(
-        clipBehavior: Clip.none,
-        children: [
-          Image.asset("./images/login(1).jpg"),
-          // Expanded(child: TextField()),
-          Positioned(
-            bottom: -830,
-            child: Container(
-              width: MediaQuery.of(context).size.width,
+      body: SingleChildScrollView(
+        child: Stack(
+          // clipBehavior: Clip.none,
+          children: [
+            Container(
               height: MediaQuery.of(context).size.height,
-              padding: EdgeInsets.all(15),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.vertical(
-                  top: Radius.circular(70),
+              alignment: Alignment.topCenter,
+              child: Image.asset("./images/login(1).jpg"),
+            ),
+            // Expanded(child: TextField()),
+            Positioned(
+              bottom: 50,
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height * .6,
+                padding: EdgeInsets.all(15),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.vertical(
+                    top: Radius.circular(70),
+                  ),
+                  color: const Color.fromARGB(255, 235, 230, 227),
                 ),
-                color: const Color.fromARGB(255, 235, 230, 227),
-              ),
-              child: Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -56,26 +60,94 @@ class _LoginpageState extends State<Loginpage> {
                         borderRadius: BorderRadius.circular(15),
                         color: const Color.fromARGB(255, 214, 202, 194),
                       ),
-                      child: Expanded(
-                        child: TextField(
-                          enabled: true,
-                          decoration: InputDecoration(
-                              enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide.none),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(color: Colors.brown),
-                                borderRadius: BorderRadius.circular(15),
+                      child: TextField(
+                        enabled: true,
+                        decoration: InputDecoration(
+                            enabledBorder:
+                                OutlineInputBorder(borderSide: BorderSide.none),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.brown,
+                                width: 1,
                               ),
-                              hintText: "User name"),
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            hintText: "User name"),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    Container(
+                      width: MediaQuery.of(context).size.width * .7,
+                      height: 50,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        color: const Color.fromARGB(255, 214, 202, 194),
+                      ),
+                      child: TextField(
+                        enabled: true,
+                        decoration: InputDecoration(
+                            enabledBorder:
+                                OutlineInputBorder(borderSide: BorderSide.none),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.brown,
+                                width: 1,
+                              ),
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            hintText: "Password"),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Text(
+                          "Forget password?",
+                          style: TextStyle(color: Colors.brown),
+                        ),
+                        SizedBox(
+                          width: 50,
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 30,
+                    ),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        padding: EdgeInsets.only(
+                            top: 15, bottom: 15, left: 35, right: 35),
+                        backgroundColor:
+                            const Color.fromARGB(255, 167, 120, 104),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
                         ),
                       ),
+                      onPressed: () {},
+                      child: Text(
+                        "Login",
+                        style: TextStyle(
+                          color: const Color.fromARGB(255, 214, 202, 194),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    Divider(
+                      color: Colors.brown[400],
                     )
                   ],
                 ),
               ),
             ),
-          )
-        ],
+          ],
+        ),
       ),
     );
   }
