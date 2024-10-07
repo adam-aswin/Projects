@@ -11,11 +11,11 @@ class _LoginpageState extends State<Loginpage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      extendBodyBehindAppBar: true,
+      // extendBodyBehindAppBar: true,
       backgroundColor: const Color.fromARGB(255, 235, 230, 227),
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-      ),
+      // appBar: AppBar(
+      //   backgroundColor: Colors.transparent,
+      // ),
       body: SingleChildScrollView(
         child: Stack(
           // clipBehavior: Clip.none,
@@ -27,10 +27,10 @@ class _LoginpageState extends State<Loginpage> {
             ),
             // Expanded(child: TextField()),
             Positioned(
-              bottom: 50,
+              bottom: -40,
               child: Container(
                 width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height * .6,
+                height: MediaQuery.of(context).size.height * .7,
                 padding: EdgeInsets.all(15),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.vertical(
@@ -51,7 +51,7 @@ class _LoginpageState extends State<Loginpage> {
                       ),
                     ),
                     SizedBox(
-                      height: 30,
+                      height: 50,
                     ),
                     Container(
                       width: MediaQuery.of(context).size.width * .7,
@@ -60,9 +60,10 @@ class _LoginpageState extends State<Loginpage> {
                         borderRadius: BorderRadius.circular(15),
                         color: const Color.fromARGB(255, 214, 202, 194),
                       ),
-                      child: TextField(
-                        enabled: true,
-                        decoration: InputDecoration(
+                      child: Expanded(
+                        child: TextField(
+                          enabled: true,
+                          decoration: InputDecoration(
                             enabledBorder:
                                 OutlineInputBorder(borderSide: BorderSide.none),
                             focusedBorder: OutlineInputBorder(
@@ -72,7 +73,9 @@ class _LoginpageState extends State<Loginpage> {
                               ),
                               borderRadius: BorderRadius.circular(15),
                             ),
-                            hintText: "User name"),
+                            hintText: "User name",
+                          ),
+                        ),
                       ),
                     ),
                     SizedBox(
@@ -85,19 +88,21 @@ class _LoginpageState extends State<Loginpage> {
                         borderRadius: BorderRadius.circular(15),
                         color: const Color.fromARGB(255, 214, 202, 194),
                       ),
-                      child: TextField(
-                        enabled: true,
-                        decoration: InputDecoration(
-                            enabledBorder:
-                                OutlineInputBorder(borderSide: BorderSide.none),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Colors.brown,
-                                width: 1,
+                      child: Expanded(
+                        child: TextField(
+                          enabled: true,
+                          decoration: InputDecoration(
+                              enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide.none),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Colors.brown,
+                                  width: 1,
+                                ),
+                                borderRadius: BorderRadius.circular(15),
                               ),
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            hintText: "Password"),
+                              hintText: "Password"),
+                        ),
                       ),
                     ),
                     SizedBox(
@@ -137,10 +142,50 @@ class _LoginpageState extends State<Loginpage> {
                       ),
                     ),
                     SizedBox(
-                      height: 15,
+                      height: 20,
+                    ),
+                    Image.asset(
+                      "./images/pngwing.com.png",
+                      height: 60,
+                      width: 60,
+                    ),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        padding: EdgeInsets.only(
+                          top: 15,
+                          bottom: 15,
+                          left: 80,
+                          right: 80,
+                        ),
+                        backgroundColor:
+                            const Color.fromARGB(255, 235, 230, 227),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          side: BorderSide(
+                            color: Colors.brown,
+                          ),
+                        ),
+                      ),
+                      onPressed: () {
+                        Navigator.pushNamed(context, "/sign");
+                      },
+                      child: Text(
+                        "Create new account",
+                        style: TextStyle(
+                          color: Colors.brown,
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 30,
                     ),
                     Divider(
                       color: Colors.brown[400],
+                    ),
+                    Icon(
+                      Icons.facebook,
+                      color: Colors.blue,
+                      size: 30,
                     )
                   ],
                 ),
