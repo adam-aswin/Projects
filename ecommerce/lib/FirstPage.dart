@@ -33,9 +33,9 @@ class _FirstpageState extends State<Firstpage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(230, 255, 255, 255),
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 146, 198, 240),
+        backgroundColor: Colors.white,
         title: Container(
           height: 30,
           width: 250,
@@ -76,18 +76,18 @@ class _FirstpageState extends State<Firstpage> {
         centerTitle: true,
       ),
       body: GridView.builder(
-        padding: EdgeInsets.fromLTRB(10, 20, 10, 20),
+        padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
         itemCount: data1.length,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
-            crossAxisSpacing: 8,
-            mainAxisSpacing: 8,
-            childAspectRatio: 2.5 / 3),
+            crossAxisSpacing: 7,
+            mainAxisSpacing: 7,
+            childAspectRatio: 2.4 / 3),
         itemBuilder: (context, index) {
           return Container(
-            padding: EdgeInsets.all(10),
+            // padding: EdgeInsets.all(10),
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
+                borderRadius: BorderRadius.circular(10),
                 color: Colors.white,
                 boxShadow: [
                   BoxShadow(
@@ -104,7 +104,9 @@ class _FirstpageState extends State<Firstpage> {
                   height: 125,
                   width: MediaQuery.of(context).size.width,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: BorderRadius.vertical(
+                      top: Radius.circular(10),
+                    ),
                     color: Colors.grey[300],
                   ),
                   child: Image.network(
@@ -113,51 +115,150 @@ class _FirstpageState extends State<Firstpage> {
                   ),
                 ),
                 SizedBox(
-                  height: 10,
+                  height: 5,
                 ),
-                data1[index]["brand"] != null
-                    ? Text(
-                        data1[index]["brand"],
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                        ),
+                Container(
+                  padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      data1[index]["brand"] != null
+                          ? Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  data1[index]["brand"],
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Icon(
+                                      Icons.star,
+                                      size: 20,
+                                      color: data1[index]["rating"] >= 4
+                                          ? Colors.green
+                                          : data1[index]["rating"] >= 3
+                                              ? Colors.orange
+                                              : Colors.red,
+                                    ),
+                                    Text(data1[index]["rating"].toString())
+                                  ],
+                                )
+                              ],
+                            )
+                          : Text(
+                              "",
+                              style: TextStyle(
+                                fontSize: 0,
+                              ),
+                            ),
+                      data1[index]["brand"] != null
+                          ? Text(
+                              data1[index]["title"],
+                              style: TextStyle(
+                                fontSize: 13,
+                                color: Colors.black54,
+                              ),
+                            )
+                          : Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  data1[index]["title"],
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Icon(
+                                      Icons.star,
+                                      size: 20,
+                                      color: data1[index]["rating"] >= 4
+                                          ? Colors.green
+                                          : data1[index]["rating"] >= 3
+                                              ? Colors.orange
+                                              : Colors.red,
+                                    ),
+                                    Text(
+                                      data1[index]["rating"].toString(),
+                                    )
+                                  ],
+                                ),
+                              ],
+                            ),
+                      data1[index]["brand"] != null
+                          ? Text(
+                              "",
+                              style: TextStyle(
+                                fontSize: 0,
+                              ),
+                            )
+                          : Text(
+                              data1[index]["description"],
+                              style: TextStyle(
+                                fontSize: 13,
+                                color: Colors.black54,
+                              ),
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "\$ ${data1[index]["price"].toString()}",
+                                style: TextStyle(
+                                  decoration: TextDecoration.lineThrough,
+                                  color: const Color.fromARGB(190, 0, 0, 0),
+                                  fontSize: 13.5,
+                                ),
+                              ),
+                              Row(
+                                children: [
+                                  Text(
+                                    "\$",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 5,
+                                  ),
+                                  Container(
+                                    width: 40,
+                                    height: 20,
+                                    child: Text(
+                                      "${(data1[index]["price"] - (data1[index]["price"] * (data1[index]["discountPercentage"] / 100))).toString()}",
+                                      overflow: TextOverflow.clip,
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              )
+                            ],
+                          ),
+                          Text(
+                            "↓${data1[index]["discountPercentage"].toString()} %",
+                            style: TextStyle(
+                              color: Colors.green,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          )
+                        ],
                       )
-                    : Text(
-                        "",
-                        style: TextStyle(
-                          fontSize: 0,
-                        ),
-                      ),
-                data1[index]["brand"] != null
-                    ? Text(
-                        data1[index]["title"],
-                        style: TextStyle(
-                          fontSize: 13,
-                          color: Colors.black54,
-                        ),
-                      )
-                    : Text(
-                        data1[index]["title"],
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                data1[index]["brand"] != null
-                    ? Text(
-                        "",
-                        style: TextStyle(
-                          fontSize: 0,
-                        ),
-                      )
-                    : Text(
-                        data1[index]["description"],
-                        style: TextStyle(
-                          fontSize: 13,
-                          color: Colors.black54,
-                        ),
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                      ),
+                    ],
+                  ),
+                )
               ],
             ),
           );
