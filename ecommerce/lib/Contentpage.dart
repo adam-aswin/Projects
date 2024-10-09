@@ -3,14 +3,15 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-class Firstpage extends StatefulWidget {
-  const Firstpage({super.key});
+class Contentpage extends StatefulWidget {
+  const Contentpage({super.key});
 
   @override
-  State<Firstpage> createState() => _FirstpageState();
+  State<Contentpage> createState() => _ContentpageState();
 }
 
-class _FirstpageState extends State<Firstpage> {
+class _ContentpageState extends State<Contentpage> {
+  int index=0;
   List data = [];
   List data1 = [];
   @override
@@ -32,6 +33,7 @@ class _FirstpageState extends State<Firstpage> {
 
   @override
   Widget build(BuildContext context) {
+    index=int.parse(ModalRoute.of(context)?.settings.arguments as String);
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -75,47 +77,17 @@ class _FirstpageState extends State<Firstpage> {
         ),
         centerTitle: true,
       ),
-      body: GridView.builder(
-        padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
-        itemCount: data1.length,
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            crossAxisSpacing: 7,
-            mainAxisSpacing: 7,
-            childAspectRatio: 2.4 / 3),
-        itemBuilder: (context, index) {
-          return GestureDetector(
-            onTap: () => Navigator.pushNamed(context,"/content",arguments: index.toString()),
-            child: Container(
-              // padding: EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: Colors.white,
-                  boxShadow: [
-                    BoxShadow(
-                      blurRadius: 5,
-                      color: Colors.grey,
-                      offset: Offset(5, 5),
-                      spreadRadius: 0,
-                    ),
-                  ]),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    height: 125,
-                    width: MediaQuery.of(context).size.width,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.vertical(
-                        top: Radius.circular(10),
-                      ),
-                      color: Colors.grey[300],
-                    ),
-                    child: Image.network(
-                      data1[index]["images"][0],
-                      fit: BoxFit.contain,
-                    ),
-                  ),
+      body: Container(
+        height: MediaQuery.of(context).size.height,
+        width: MediaQuery.of(context).size.width,
+        child: Column(
+          children: [
+            Container(
+              width: MediaQuery.of(context).size.width,
+              height: 350,
+              color: Colors.grey[100],
+              child: Image.network(data1[index]["images"][0],fit: BoxFit.contain,),
+              ),
                   SizedBox(
                     height: 5,
                   ),
@@ -159,10 +131,10 @@ class _FirstpageState extends State<Firstpage> {
                               ),
                         data1[index]["brand"] != null
                             ? Text(
-                                data1[index]["title"],
+                                data1[index]["description"],
                                 style: TextStyle(
                                   fontSize: 13,
-                                  color: Colors.black54,
+                                  color: Colors.black87,
                                 ),
                               )
                             : Row(
@@ -210,7 +182,7 @@ class _FirstpageState extends State<Firstpage> {
                                 overflow: TextOverflow.ellipsis,
                               ),
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -219,7 +191,7 @@ class _FirstpageState extends State<Firstpage> {
                                   "\$ ${data1[index]["price"].toString()}",
                                   style: TextStyle(
                                     decoration: TextDecoration.lineThrough,
-                                    color: const Color.fromARGB(190, 0, 0, 0),
+                                    color: const Color.fromARGB(220, 0, 0, 0),
                                     fontSize: 13.5,
                                   ),
                                 ),
@@ -249,11 +221,13 @@ class _FirstpageState extends State<Firstpage> {
                                 )
                               ],
                             ),
+                            SizedBox(width: 10,),
                             Text(
                               "↓${data1[index]["discountPercentage"].toString()} %",
                               style: TextStyle(
                                 color: Colors.green,
                                 fontWeight: FontWeight.bold,
+                                fontSize: 16,
                               ),
                             )
                           ],
@@ -261,11 +235,8 @@ class _FirstpageState extends State<Firstpage> {
                       ],
                     ),
                   )
-                ],
-              ),
-            ),
-          );
-        },
+          ],
+        ),
       ),
     );
   }
