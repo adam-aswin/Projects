@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:http/http.dart' as http;
 
 class Firstpage extends StatefulWidget {
@@ -13,6 +14,7 @@ class Firstpage extends StatefulWidget {
 class _FirstpageState extends State<Firstpage> {
   List data = [];
   List data1 = [];
+  final mydata = Hive.box('products');
   @override
   void initState() {
     // TODO: implement initState
@@ -28,6 +30,10 @@ class _FirstpageState extends State<Firstpage> {
       data1 = data[0]["products"];
     });
     print(data1);
+  }
+
+  void addData() {
+    mydata.put('key', data1);
   }
 
   @override
@@ -85,7 +91,11 @@ class _FirstpageState extends State<Firstpage> {
             childAspectRatio: 2.4 / 3),
         itemBuilder: (context, index) {
           return GestureDetector(
-            onTap: () => Navigator.pushNamed(context,"/content",arguments: index.toString()),
+            onTap: () {
+              Navigator.pushNamed(context, "/content",
+                  arguments: index.toString());
+              addData();
+            },
             child: Container(
               // padding: EdgeInsets.all(10),
               decoration: BoxDecoration(
@@ -126,7 +136,8 @@ class _FirstpageState extends State<Firstpage> {
                       children: [
                         data1[index]["brand"] != null
                             ? Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
                                     data1[index]["brand"],
@@ -166,7 +177,8 @@ class _FirstpageState extends State<Firstpage> {
                                 ),
                               )
                             : Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
                                     data1[index]["title"],

@@ -1,7 +1,5 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+import 'package:hive/hive.dart';
 
 class Contentpage extends StatefulWidget {
   const Contentpage({super.key});
@@ -11,9 +9,9 @@ class Contentpage extends StatefulWidget {
 }
 
 class _ContentpageState extends State<Contentpage> {
-  int index=0;
+  int index = 0;
   List data = [];
-  List data1 = [];
+  final mydata = Hive.box('products');
   @override
   void initState() {
     // TODO: implement initState
@@ -21,19 +19,13 @@ class _ContentpageState extends State<Contentpage> {
     getData();
   }
 
-  void getData() async {
-    var res = await http.get(Uri.parse('https://dummyjson.com/products'));
-    // print(res.body[1]);
-    setState(() {
-      data.add(jsonDecode(res.body));
-      data1 = data[0]["products"];
-    });
-    print(data1);
+  void getData() {
+    data = mydata.get('key');
   }
 
   @override
   Widget build(BuildContext context) {
-    index=int.parse(ModalRoute.of(context)?.settings.arguments as String);
+    index = int.parse(ModalRoute.of(context)?.settings.arguments as String);
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -80,161 +72,204 @@ class _ContentpageState extends State<Contentpage> {
       body: Container(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
-        child: Column(
+        child: ListView(
           children: [
             Container(
               width: MediaQuery.of(context).size.width,
-              height: 350,
+              height: MediaQuery.of(context).size.height * .6,
               color: Colors.grey[100],
-              child: Image.network(data1[index]["images"][0],fit: BoxFit.contain,),
+              child: Image.network(
+                data[index]["images"][0],
+                fit: BoxFit.contain,
               ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  Container(
-                    padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        data1[index]["brand"] != null
-                            ? Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    data1[index]["brand"],
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      Icon(
-                                        Icons.star,
-                                        size: 20,
-                                        color: data1[index]["rating"] >= 4
-                                            ? Colors.green
-                                            : data1[index]["rating"] >= 3
-                                                ? Colors.orange
-                                                : Colors.red,
-                                      ),
-                                      Text(data1[index]["rating"].toString())
-                                    ],
-                                  )
-                                ],
-                              )
-                            : Text(
-                                "",
-                                style: TextStyle(
-                                  fontSize: 0,
-                                ),
-                              ),
-                        data1[index]["brand"] != null
-                            ? Text(
-                                data1[index]["description"],
-                                style: TextStyle(
-                                  fontSize: 13,
-                                  color: Colors.black87,
-                                ),
-                              )
-                            : Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    data1[index]["title"],
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      Icon(
-                                        Icons.star,
-                                        size: 20,
-                                        color: data1[index]["rating"] >= 4
-                                            ? Colors.green
-                                            : data1[index]["rating"] >= 3
-                                                ? Colors.orange
-                                                : Colors.red,
-                                      ),
-                                      Text(
-                                        data1[index]["rating"].toString(),
-                                      )
-                                    ],
-                                  ),
-                                ],
-                              ),
-                        data1[index]["brand"] != null
-                            ? Text(
-                                "",
-                                style: TextStyle(
-                                  fontSize: 0,
-                                ),
-                              )
-                            : Text(
-                                data1[index]["description"],
-                                style: TextStyle(
-                                  fontSize: 13,
-                                  color: Colors.black54,
-                                ),
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
+            ),
+            SizedBox(
+              height: 5,
+            ),
+            Container(
+              padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  data[index]["brand"] != null
+                      ? Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                            Text(
+                              data[index]["brand"],
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                Text(
-                                  "\$ ${data1[index]["price"].toString()}",
-                                  style: TextStyle(
-                                    decoration: TextDecoration.lineThrough,
-                                    color: const Color.fromARGB(220, 0, 0, 0),
-                                    fontSize: 13.5,
-                                  ),
+                                Icon(
+                                  Icons.star,
+                                  size: 20,
+                                  color: data[index]["rating"] >= 4
+                                      ? Colors.green
+                                      : data[index]["rating"] >= 3
+                                          ? Colors.orange
+                                          : Colors.red,
                                 ),
-                                Row(
-                                  children: [
-                                    Text(
-                                      "\$",
+                                Text(data[index]["rating"].toString())
+                              ],
+                            )
+                          ],
+                        )
+                      : Text(
+                          "",
+                          style: TextStyle(
+                            fontSize: 0,
+                          ),
+                        ),
+                  data[index]["brand"] != null
+                      ? Text(
+                          data[index]["description"],
+                          style: TextStyle(
+                            fontSize: 13,
+                            color: Colors.black87,
+                          ),
+                        )
+                      : Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              data[index]["title"],
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Icon(
+                                  Icons.star,
+                                  size: 20,
+                                  color: data[index]["rating"] >= 4
+                                      ? Colors.green
+                                      : data[index]["rating"] >= 3
+                                          ? Colors.orange
+                                          : Colors.red,
+                                ),
+                                Text(
+                                  data[index]["rating"].toString(),
+                                )
+                              ],
+                            ),
+                          ],
+                        ),
+                  data[index]["brand"] != null
+                      ? Text(
+                          "",
+                          style: TextStyle(
+                            fontSize: 0,
+                          ),
+                        )
+                      : Text(
+                          data[index]["description"],
+                          style: TextStyle(
+                            fontSize: 13,
+                            color: Colors.black87,
+                          ),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "\$ ${data[index]["price"].toString()}",
+                                style: TextStyle(
+                                  decoration: TextDecoration.lineThrough,
+                                  color: const Color.fromARGB(220, 0, 0, 0),
+                                  fontSize: 13.5,
+                                ),
+                              ),
+                              Row(
+                                children: [
+                                  Text(
+                                    "\$",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 5,
+                                  ),
+                                  Container(
+                                    width: 40,
+                                    height: 20,
+                                    child: Text(
+                                      "${(data[index]["price"] - (data[index]["price"] * (data[index]["discountPercentage"] / 100))).toString()}",
+                                      overflow: TextOverflow.clip,
                                       style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
-                                    SizedBox(
-                                      width: 5,
-                                    ),
-                                    Container(
-                                      width: 40,
-                                      height: 20,
-                                      child: Text(
-                                        "${(data1[index]["price"] - (data1[index]["price"] * (data1[index]["discountPercentage"] / 100))).toString()}",
-                                        overflow: TextOverflow.clip,
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                )
-                              ],
+                                  ),
+                                ],
+                              )
+                            ],
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Text(
+                            "↓${data[index]["discountPercentage"].toString()} %",
+                            style: TextStyle(
+                              color: Colors.green,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
                             ),
-                            SizedBox(width: 10,),
-                            Text(
-                              "↓${data1[index]["discountPercentage"].toString()} %",
+                          )
+                        ],
+                      ),
+                      data[index]["stock"] > 10
+                          ? Text(
+                              "In Stock",
                               style: TextStyle(
                                 color: Colors.green,
                                 fontWeight: FontWeight.bold,
-                                fontSize: 16,
                               ),
                             )
-                          ],
-                        )
-                      ],
-                    ),
-                  )
+                          : Row(
+                              children: [
+                                Text(
+                                  "Stock left: ",
+                                  style: TextStyle(
+                                    color: data[index]["stock"] > 10
+                                        ? Colors.green
+                                        : Colors.red,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                Text(
+                                  data[index]["stock"].toString(),
+                                  style: TextStyle(
+                                    color: data[index]["stock"] > 10
+                                        ? Colors.green
+                                        : Colors.red,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
+                            )
+                    ],
+                  ),
+                ],
+              ),
+            )
           ],
         ),
       ),
