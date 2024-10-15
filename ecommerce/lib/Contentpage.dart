@@ -196,96 +196,150 @@ class _ContentpageState extends State<Contentpage> {
                       height: 10,
                     ),
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "\$ ${data[ind!]["price"].toString()}",
-                                  style: TextStyle(
-                                    decoration: TextDecoration.lineThrough,
-                                    color: const Color.fromARGB(220, 0, 0, 0),
-                                    fontSize: 13.5,
-                                  ),
-                                ),
-                                Row(
-                                  children: [
-                                    Text(
-                                      "\$",
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                      ),
+                            data[ind!]["stock"] > 10
+                                ? Text(
+                                    "In Stock",
+                                    style: TextStyle(
+                                      color: Colors.green,
+                                      fontWeight: FontWeight.bold,
                                     ),
-                                    SizedBox(
-                                      width: 5,
-                                    ),
-                                    Container(
-                                      width: 40,
-                                      height: 20,
-                                      child: Text(
-                                        "${(data[ind!]["price"] - (data[ind!]["price"] * (data[ind!]["discountPercentage"] / 100))).toString()}",
-                                        overflow: TextOverflow.clip,
+                                  )
+                                : Row(
+                                    children: [
+                                      Text(
+                                        "Stock left: ",
                                         style: TextStyle(
+                                          color: data[ind!]["stock"] > 10
+                                              ? Colors.green
+                                              : Colors.red,
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ),
-                                    ),
-                                  ],
-                                )
-                              ],
-                            ),
+                                      Text(
+                                        data[ind!]["stock"].toString(),
+                                        style: TextStyle(
+                                          color: data[ind!]["stock"] > 10
+                                              ? Colors.green
+                                              : Colors.red,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                             SizedBox(
-                              width: 10,
+                              height: 15,
                             ),
                             Text(
-                              "↓${data[ind!]["discountPercentage"].toString()} %",
+                              "\$ ${data[ind!]["price"].toString()}",
                               style: TextStyle(
-                                color: Colors.green,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
+                                decoration: TextDecoration.lineThrough,
+                                color: const Color.fromARGB(220, 0, 0, 0),
+                                fontSize: 13.5,
                               ),
+                            ),
+                            Row(
+                              children: [
+                                Text(
+                                  "\$",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                Container(
+                                  width: 40,
+                                  height: 20,
+                                  child: Text(
+                                    "${(data[ind!]["price"] - (data[ind!]["price"] * (data[ind!]["discountPercentage"] / 100))).toString()}",
+                                    overflow: TextOverflow.clip,
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                              ],
                             )
                           ],
                         ),
-                        data[ind!]["stock"] > 10
-                            ? Text(
-                                "In Stock",
-                                style: TextStyle(
-                                  color: Colors.green,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              )
-                            : Row(
-                                children: [
-                                  Text(
-                                    "Stock left: ",
-                                    style: TextStyle(
-                                      color: data[ind!]["stock"] > 10
-                                          ? Colors.green
-                                          : Colors.red,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  Text(
-                                    data[ind!]["stock"].toString(),
-                                    style: TextStyle(
-                                      color: data[ind!]["stock"] > 10
-                                          ? Colors.green
-                                          : Colors.red,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ],
-                              )
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(top: 35),
+                          child: Text(
+                            "↓${data[ind!]["discountPercentage"].toString()} %",
+                            style: TextStyle(
+                              color: Colors.green,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Divider(),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      "Details",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.circle,
+                          size: 10,
+                        ),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Text(data[ind!]["warrantyInformation"]),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.circle,
+                          size: 10,
+                        ),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Text(data[ind!]["shippingInformation"]),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.circle,
+                          size: 10,
+                        ),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Text(data[ind!]["availabilityStatus"]),
                       ],
                     ),
                   ],
                 ),
-              )
+              ),
             ],
           ),
         ),

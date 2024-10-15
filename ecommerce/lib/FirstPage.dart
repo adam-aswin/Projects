@@ -42,6 +42,7 @@ class _FirstpageState extends State<Firstpage> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
+        actions: [],
         title: Container(
           height: 30,
           width: 250,
