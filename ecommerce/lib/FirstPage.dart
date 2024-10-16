@@ -42,7 +42,20 @@ class _FirstpageState extends State<Firstpage> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
-        actions: [],
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: Image.asset(
+              "./lib/icons/shopping-cart.png",
+              color: Colors.grey[800],
+              height: 30,
+              width: 30,
+            ),
+          ),
+          SizedBox(
+            width: 10,
+          ),
+        ],
         title: Container(
           height: 30,
           width: 250,
