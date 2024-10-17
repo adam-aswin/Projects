@@ -1,3 +1,4 @@
+import 'package:bloodbank/editpage.dart';
 import 'package:bloodbank/pages/Addpage.dart';
 import 'package:bloodbank/pages/Homepage.dart';
 import 'package:bloodbank/pages/displaypage.dart';
@@ -11,6 +12,7 @@ void main() {
       "/home": (context) => Homescreen(),
       "/home1": (context) => Homepage(),
       "/add": (context) => Addpage(),
+      "/edit": (context) => Editpage(),
       "/display": (context) => Displaypage(),
     },
   ));

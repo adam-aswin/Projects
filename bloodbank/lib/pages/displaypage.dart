@@ -248,10 +248,16 @@ class _DisplaypageState extends State<Displaypage> {
                                       //         BorderRadius.circular(100),
                                       //     color: const Color.fromARGB(
                                       //         255, 250, 189, 189)),
-                                      child: Icon(
-                                        Icons.edit,
-                                        color: Colors.red,
-                                        size: 20,
+                                      child: IconButton(
+                                        icon: Icon(
+                                          Icons.edit,
+                                          color: Colors.red,
+                                          size: 20,
+                                        ),
+                                        onPressed: () {
+                                          Navigator.pushNamed(context, "/edit",
+                                              arguments: cnt[index]["_id"]);
+                                        },
                                       ),
                                     ),
                                     SizedBox(
@@ -265,10 +271,13 @@ class _DisplaypageState extends State<Displaypage> {
                                       //         BorderRadius.circular(100),
                                       //     color: const Color.fromARGB(
                                       //         255, 250, 189, 189)),
-                                      child: Icon(
-                                        Icons.delete,
-                                        color: Colors.red,
-                                        size: 20,
+                                      child: IconButton(
+                                        icon: Icon(
+                                          Icons.delete,
+                                          color: Colors.red,
+                                          size: 20,
+                                        ),
+                                        onPressed: () {},
                                       ),
                                     ),
                                   ],
