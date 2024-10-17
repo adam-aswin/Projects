@@ -44,7 +44,9 @@ class _FirstpageState extends State<Firstpage> {
         backgroundColor: Colors.white,
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pushNamed(context, "/cart");
+            },
             icon: Image.asset(
               "./lib/icons/shopping-cart.png",
               color: Colors.grey[800],

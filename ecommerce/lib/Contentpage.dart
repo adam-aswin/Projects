@@ -31,6 +31,23 @@ class _ContentpageState extends State<Contentpage> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
+        actions: [
+          Container(
+            margin: EdgeInsets.only(right: 10),
+            padding: EdgeInsets.all(8),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8),
+              border: Border.all(
+                color: Colors.black,
+              ),
+            ),
+            child: Image.asset(
+              "./lib/icons/add-to-cart.png",
+              height: 25,
+              width: 25,
+            ),
+          ),
+        ],
         title: Container(
           height: 30,
           width: 250,
@@ -104,350 +121,412 @@ class _ContentpageState extends State<Contentpage> {
                   SizedBox(
                     height: 5,
                   ),
-                  Container(
-                    padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        data[ind!]["brand"] != null
-                            ? Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    data[ind!]["brand"],
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
+                  Expanded(
+                    child: Container(
+                      padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                      child: Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            data[ind!]["brand"] != null
+                                ? Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Icon(
-                                        Icons.star,
-                                        size: 20,
-                                        color: data[ind!]["rating"] >= 4
-                                            ? Colors.green
-                                            : data[ind!]["rating"] >= 3
-                                                ? Colors.orange
-                                                : Colors.red,
+                                      Text(
+                                        data[ind!]["brand"],
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                        ),
                                       ),
-                                      Text(data[ind!]["rating"].toString())
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: [
+                                          Icon(
+                                            Icons.star,
+                                            size: 20,
+                                            color: data[ind!]["rating"] >= 4
+                                                ? Colors.green
+                                                : data[ind!]["rating"] >= 3
+                                                    ? Colors.orange
+                                                    : Colors.red,
+                                          ),
+                                          Text(data[ind!]["rating"].toString())
+                                        ],
+                                      )
                                     ],
                                   )
-                                ],
-                              )
-                            : Text(
-                                "",
-                                style: TextStyle(
-                                  fontSize: 0,
-                                ),
-                              ),
-                        data[ind!]["brand"] != null
-                            ? Text(
-                                data[ind!]["description"],
-                                style: TextStyle(
-                                  fontSize: 13,
-                                  color: Colors.black87,
-                                ),
-                              )
-                            : Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    data[ind!]["title"],
+                                : Text(
+                                    "",
                                     style: TextStyle(
-                                      fontWeight: FontWeight.bold,
+                                      fontSize: 0,
                                     ),
                                   ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
+                            data[ind!]["brand"] != null
+                                ? Text(
+                                    data[ind!]["description"],
+                                    style: TextStyle(
+                                      fontSize: 13,
+                                      color: Colors.black87,
+                                    ),
+                                  )
+                                : Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Icon(
-                                        Icons.star,
-                                        size: 20,
-                                        color: data[ind!]["rating"] >= 4
-                                            ? Colors.green
-                                            : data[ind!]["rating"] >= 3
-                                                ? Colors.orange
-                                                : Colors.red,
-                                      ),
                                       Text(
-                                        data[ind!]["rating"].toString(),
-                                      )
-                                    ],
-                                  ),
-                                ],
-                              ),
-                        data[ind!]["brand"] != null
-                            ? Text(
-                                "",
-                                style: TextStyle(
-                                  fontSize: 0,
-                                ),
-                              )
-                            : Text(
-                                data[ind!]["description"],
-                                style: TextStyle(
-                                  fontSize: 13,
-                                  color: Colors.black87,
-                                ),
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                data[ind!]["stock"] > 10
-                                    ? Text(
-                                        "In Stock",
+                                        data[ind!]["title"],
                                         style: TextStyle(
-                                          color: Colors.green,
                                           fontWeight: FontWeight.bold,
                                         ),
-                                      )
-                                    : Row(
+                                      ),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
                                         children: [
-                                          Text(
-                                            "Stock left: ",
-                                            style: TextStyle(
-                                              color: data[ind!]["stock"] > 10
-                                                  ? Colors.green
-                                                  : Colors.red,
-                                              fontWeight: FontWeight.bold,
-                                            ),
+                                          Icon(
+                                            Icons.star,
+                                            size: 20,
+                                            color: data[ind!]["rating"] >= 4
+                                                ? Colors.green
+                                                : data[ind!]["rating"] >= 3
+                                                    ? Colors.orange
+                                                    : Colors.red,
                                           ),
                                           Text(
-                                            data[ind!]["stock"].toString(),
-                                            style: TextStyle(
-                                              color: data[ind!]["stock"] > 10
-                                                  ? Colors.green
-                                                  : Colors.red,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
+                                            data[ind!]["rating"].toString(),
+                                          )
                                         ],
                                       ),
-                                SizedBox(
-                                  height: 15,
-                                ),
-                                Text(
-                                  "\$ ${data[ind!]["price"].toString()}",
-                                  style: TextStyle(
-                                    decoration: TextDecoration.lineThrough,
-                                    color: const Color.fromARGB(220, 0, 0, 0),
-                                    fontSize: 13.5,
+                                    ],
                                   ),
-                                ),
-                                Row(
+                            data[ind!]["brand"] != null
+                                ? Text(
+                                    "",
+                                    style: TextStyle(
+                                      fontSize: 0,
+                                    ),
+                                  )
+                                : Text(
+                                    data[ind!]["description"],
+                                    style: TextStyle(
+                                      fontSize: 13,
+                                      color: Colors.black87,
+                                    ),
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text(
-                                      "\$",
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
+                                    data[ind!]["stock"] > 10
+                                        ? Text(
+                                            "In Stock",
+                                            style: TextStyle(
+                                              color: Colors.green,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          )
+                                        : Row(
+                                            children: [
+                                              Text(
+                                                "Stock left: ",
+                                                style: TextStyle(
+                                                  color:
+                                                      data[ind!]["stock"] > 10
+                                                          ? Colors.green
+                                                          : Colors.red,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                              Text(
+                                                data[ind!]["stock"].toString(),
+                                                style: TextStyle(
+                                                  color:
+                                                      data[ind!]["stock"] > 10
+                                                          ? Colors.green
+                                                          : Colors.red,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
                                     SizedBox(
-                                      width: 5,
+                                      height: 15,
                                     ),
-                                    Container(
-                                      width: 40,
-                                      height: 20,
-                                      child: Text(
-                                        "${(data[ind!]["price"] - (data[ind!]["price"] * (data[ind!]["discountPercentage"] / 100))).toString()}",
-                                        overflow: TextOverflow.clip,
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                        ),
+                                    Text(
+                                      "\$ ${data[ind!]["price"].toString()}",
+                                      style: TextStyle(
+                                        decoration: TextDecoration.lineThrough,
+                                        color:
+                                            const Color.fromARGB(220, 0, 0, 0),
+                                        fontSize: 13.5,
                                       ),
                                     ),
+                                    Row(
+                                      children: [
+                                        Text(
+                                          "\$",
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: 5,
+                                        ),
+                                        Container(
+                                          width: 40,
+                                          height: 20,
+                                          child: Text(
+                                            "${(data[ind!]["price"] - (data[ind!]["price"] * (data[ind!]["discountPercentage"] / 100))).toString()}",
+                                            overflow: TextOverflow.clip,
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    )
                                   ],
+                                ),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Container(
+                                  margin: EdgeInsets.only(top: 35),
+                                  child: Text(
+                                    "↓${data[ind!]["discountPercentage"].toString()} %",
+                                    style: TextStyle(
+                                      color: Colors.green,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16,
+                                    ),
+                                  ),
                                 )
                               ],
                             ),
                             SizedBox(
-                              width: 10,
+                              height: 10,
+                            ),
+                            Divider(),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Text(
+                              "Details",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            Row(
+                              children: [
+                                Icon(
+                                  Icons.circle,
+                                  size: 10,
+                                ),
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                Text(data[ind!]["warrantyInformation"]),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                Icon(
+                                  Icons.circle,
+                                  size: 10,
+                                ),
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                Text(data[ind!]["shippingInformation"]),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                Icon(
+                                  Icons.circle,
+                                  size: 10,
+                                ),
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                Text(data[ind!]["availabilityStatus"]),
+                              ],
+                            ),
+                            Divider(),
+                            SizedBox(
+                              height: 15,
+                            ),
+                            Text(
+                              "Reviews",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                              ),
                             ),
                             Container(
-                              margin: EdgeInsets.only(top: 35),
-                              child: Text(
-                                "↓${data[ind!]["discountPercentage"].toString()} %",
-                                style: TextStyle(
-                                  color: Colors.green,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 16,
+                              height: 150,
+                              width: MediaQuery.of(context).size.width,
+                              margin: EdgeInsets.only(left: 50),
+                              child: Row(
+                                children: [
+                                  Icon(Icons.star),
+                                  Icon(Icons.star),
+                                  Icon(Icons.star),
+                                  Icon(Icons.star),
+                                  Icon(Icons.star_half),
+                                  SizedBox(
+                                    width: 20,
+                                  ),
+                                  VerticalDivider(),
+                                  SizedBox(
+                                    width: 20,
+                                  ),
+                                  Text(
+                                    "4.5",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 30,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 20,
+                                  ),
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          Text("4"),
+                                          Icon(Icons.star),
+                                          Container(
+                                            height: 10,
+                                            width: 100,
+                                            color: Colors.green,
+                                          )
+                                        ],
+                                      ),
+                                      Row(
+                                        children: [
+                                          Text("3"),
+                                          Icon(Icons.star),
+                                          Container(
+                                            height: 10,
+                                            width: 90,
+                                            color: Colors.amber,
+                                          )
+                                        ],
+                                      ),
+                                      Row(
+                                        children: [
+                                          Text("2"),
+                                          Icon(Icons.star),
+                                          Container(
+                                            height: 10,
+                                            width: 70,
+                                            color: Colors.orange,
+                                          )
+                                        ],
+                                      ),
+                                      Row(
+                                        children: [
+                                          Text("1"),
+                                          Icon(Icons.star),
+                                          Container(
+                                            height: 10,
+                                            width: 50,
+                                            color: Colors.red,
+                                          )
+                                        ],
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              ),
+                            ),
+                            Container(
+                              width: MediaQuery.of(context).size.width,
+                              height: MediaQuery.of(context).size.height * .3,
+                              child: Expanded(
+                                child: ListView.builder(
+                                  itemCount: data[ind!]["reviews"].length,
+                                  itemBuilder: (context, index) {
+                                    return ListTile(
+                                      title: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            data[ind!]["reviews"][index]
+                                                ["reviewerName"],
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                          Row(
+                                            children: [
+                                              Text(
+                                                data[ind!]["reviews"][index]
+                                                        ["rating"]
+                                                    .toString(),
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                              Icon(
+                                                Icons.star,
+                                                color: Colors.black,
+                                              ),
+                                            ],
+                                          )
+                                        ],
+                                      ),
+                                      subtitle: Text(
+                                        data[ind!]["reviews"][index]["comment"],
+                                      ),
+                                    );
+                                  },
                                 ),
                               ),
+                            ),
+                            SizedBox(
+                              height: 10,
                             )
                           ],
                         ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Divider(),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Text(
-                          "Details",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
-                          ),
-                        ),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        Row(
-                          children: [
-                            Icon(
-                              Icons.circle,
-                              size: 10,
-                            ),
-                            SizedBox(
-                              width: 5,
-                            ),
-                            Text(data[ind!]["warrantyInformation"]),
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            Icon(
-                              Icons.circle,
-                              size: 10,
-                            ),
-                            SizedBox(
-                              width: 5,
-                            ),
-                            Text(data[ind!]["shippingInformation"]),
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            Icon(
-                              Icons.circle,
-                              size: 10,
-                            ),
-                            SizedBox(
-                              width: 5,
-                            ),
-                            Text(data[ind!]["availabilityStatus"]),
-                          ],
-                        ),
-                        Divider(),
-                        SizedBox(
-                          height: 15,
-                        ),
-                        Text(
-                          "Reviews",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
-                          ),
-                        ),
-                        Container(
-                          height: 150,
-                          width: MediaQuery.of(context).size.width,
-                          margin: EdgeInsets.only(left: 50),
-                          child: Row(
-                            children: [
-                              Icon(Icons.star),
-                              Icon(Icons.star),
-                              Icon(Icons.star),
-                              Icon(Icons.star),
-                              Icon(Icons.star_half),
-                              SizedBox(
-                                width: 20,
-                              ),
-                              VerticalDivider(),
-                              SizedBox(
-                                width: 20,
-                              ),
-                              Text(
-                                "4.5",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 30,
-                                ),
-                              ),
-                              SizedBox(
-                                width: 20,
-                              ),
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    children: [
-                                      Text("4"),
-                                      Icon(Icons.star),
-                                      Container(
-                                        height: 10,
-                                        width: 100,
-                                        color: Colors.green,
-                                      )
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      Text("3"),
-                                      Icon(Icons.star),
-                                      Container(
-                                        height: 10,
-                                        width: 90,
-                                        color: Colors.amber,
-                                      )
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      Text("2"),
-                                      Icon(Icons.star),
-                                      Container(
-                                        height: 10,
-                                        width: 70,
-                                        color: Colors.orange,
-                                      )
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      Text("1"),
-                                      Icon(Icons.star),
-                                      Container(
-                                        height: 10,
-                                        width: 50,
-                                        color: Colors.red,
-                                      )
-                                    ],
-                                  ),
-                                ],
-                              )
-                            ],
-                          ),
-                        ),
-                      ],
+                      ),
                     ),
                   ),
                 ],
               ),
             ),
-            // Row(
-            //   children: [
-            //     Image.asset(
-            //       "./lib/icons/add-to-cart.png",
-            //       height: 40,
-            //       width: 40,
-            //     ),
-            //   ],
-            // )
+            Container(
+              alignment: Alignment.center,
+              width: MediaQuery.of(context).size.width,
+              height: 45,
+              color: Colors.amber,
+              child: Text(
+                "Buy Now",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 17,
+                ),
+              ),
+            ),
           ],
         ),
       ),
