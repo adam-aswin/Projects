@@ -3,7 +3,6 @@ import 'dart:io';
 import 'dart:convert';
 // import 'dart:typed_data';
 import 'package:http/http.dart' as http;
-import 'package:image_picker/image_picker.dart';
 
 class Editpage extends StatefulWidget {
   const Editpage({super.key});
@@ -21,12 +20,11 @@ class _EditpageState extends State<Editpage> {
   TextEditingController c6 = TextEditingController();
   TextEditingController c7 = TextEditingController();
   String? _selectedblood;
+  String? id;
   String? _isSelected;
-  bool _isChecked = false;
   File? _image;
   Map cnt = {};
-  String? base;
-  final ImagePicker _picker = ImagePicker();
+
   final List<String> bloodgroup = [
     "A-",
     "A+",
@@ -37,102 +35,59 @@ class _EditpageState extends State<Editpage> {
     "B+",
     "B-",
   ];
-  void gallery() async {
-    final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
-    setState(() {
-      if (pickedFile != null) {
-        _image = File(pickedFile.path);
-        Navigator.pop(context);
-      } else {
-        print("null");
-      }
-    });
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getData();
   }
 
-  void camera() async {
-    final pickedFile = await _picker.pickImage(source: ImageSource.camera);
-    setState(() {
-      if (pickedFile != null) {
-        _image = File(pickedFile.path);
-        Navigator.pop(context);
-      } else {
-        print("null");
-      }
-    });
-  }
+  void getData() async {
+    print(id);
+    var res1 = await http.get(Uri.parse('http://jandk.tech/api/getdonor/$id'));
+    if (id != null) {
+      var res1 =
+          await http.get(Uri.parse('http://jandk.tech/api/getdonor/$id'));
 
-  void pickimage() async {
-    if (_image == null) {
-      showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              backgroundColor: const Color.fromARGB(255, 247, 230, 230),
-              title: Text(
-                "Choose a File",
-                style: TextStyle(color: Colors.black),
-              ),
-              actions: [
-                TextButton(
-                  onPressed: gallery,
-                  child: Text(
-                    "Gallery",
-                    style: TextStyle(color: Colors.blueAccent[700]),
-                  ),
-                ),
-                TextButton(
-                  onPressed: camera,
-                  child: Text(
-                    "Camera",
-                    style: TextStyle(color: Colors.blueAccent[700]),
-                  ),
-                ),
-              ],
-            );
-          });
-    } else {
-      print("null");
+      cnt = jsonDecode(res1.body);
     }
+    print(cnt);
+    setState(() {
+      c1.text = cnt["name"];
+      c2.text = cnt["age"].toString();
+      c4.text = cnt["phone"].toString();
+      c5.text = cnt["dob"];
+      _selectedblood = cnt["blood_group"];
+      c7.text = cnt["place"];
+    });
   }
 
-  void saveData() async {
-    // cnt = {
-    //   "name": c1.text,
-    //   "age": c2.text,
-    //   "phone": c4.text,
-    //   "dob": c5.text,
-    //   "blood_group": _selectedblood,
-    //   "place": c7.text
-    // };
-    // print(cnt);
-    // var res1 = await http.post(Uri.parse('http://jandk.tech/api/adddonor'),
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //     },
-    //     body: json.encode(cnt));
-    // print(res1.statusCode);
-    Navigator.pushNamed(context, "/home1");
+  void editData() async {
+    Map data = {
+      "name": c1.text,
+      "age": c2.text,
+      "phone": c4.text,
+      "dob": c5.text,
+      "blood_group": _selectedblood,
+      "place": c7.text
+    };
+    print(data);
+    var res = await http.put(
+      Uri.parse('http://jandk.tech/api/editdonor/$id'),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode(data),
+    );
+    print(res.body);
+
+    Navigator.pushNamedAndRemoveUntil(
+        context, "/home1", (Route route) => false);
   }
 
   void dob() {
     RegExp reg = RegExp(r'(\d{4})-(0\d||1[0-2])-([0-2]\d||3[0-1])$');
-    // _isChecked == false
-    //     ? showDialog(
-    //         context: context,
-    //         builder: (BuildContext context) {
-    //           return AlertDialog(
-    //             backgroundColor: const Color.fromARGB(255, 247, 230, 230),
-    //             title: Text("Please agree to be a donor to Continue"),
-    //             actions: [
-    //               TextButton(
-    //                 onPressed: () {
-    //                   Navigator.pop(context);
-    //                 },
-    //                 child: Text("Ok"),
-    //               ),
-    //             ],
-    //           );
-    //         }):
+
     reg.hasMatch(c5.text) == false
         ? showDialog(
             context: context,
@@ -150,17 +105,14 @@ class _EditpageState extends State<Editpage> {
                 ],
               );
             })
-        : saveData();
+        : editData();
 
     c5.clear();
-
-    print(reg.hasMatch(c5.text));
-    // print(_isChecked);
   }
 
   @override
   Widget build(BuildContext context) {
-    String id = ModalRoute.of(context)!.settings.arguments as String;
+    id = ModalRoute.of(context)?.settings.arguments as String;
     return Scaffold(
         backgroundColor: const Color.fromARGB(255, 247, 230, 230),
         appBar: AppBar(
@@ -207,7 +159,7 @@ class _EditpageState extends State<Editpage> {
                     bottom: -50,
                     left: 150,
                     child: GestureDetector(
-                      onTap: pickimage,
+                      // onTap: pickimage,
                       child: Container(
                         width: 120,
                         height: 120,
@@ -238,7 +190,7 @@ class _EditpageState extends State<Editpage> {
                       bottom: -41,
                       right: 145,
                       child: GestureDetector(
-                        onTap: pickimage,
+                        // onTap: pickimage,
                         child: Container(
                           width: 30,
                           height: 30,
@@ -547,6 +499,7 @@ class _EditpageState extends State<Editpage> {
                     //     ],
                     //   ),
                     // ),
+                    // Text(cnt["name"])
                   ],
                 ),
               ),

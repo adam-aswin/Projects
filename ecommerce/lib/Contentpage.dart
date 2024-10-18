@@ -11,6 +11,8 @@ class Contentpage extends StatefulWidget {
 class _ContentpageState extends State<Contentpage> {
   int? ind;
   List data = [];
+  List expdata = [];
+  bool _isSelected = false;
   List img = [];
   final mydata = Hive.box('products');
   @override
@@ -32,19 +34,45 @@ class _ContentpageState extends State<Contentpage> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         actions: [
-          Container(
-            margin: EdgeInsets.only(right: 10),
-            padding: EdgeInsets.all(8),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8),
-              border: Border.all(
-                color: Colors.black,
+          GestureDetector(
+            onTap: () {
+              setState(() {
+                if (mydata.get('key1') != null) {
+                  expdata = mydata.get('key1');
+                  expdata.add(data[ind!]);
+                  mydata.put('key1', expdata);
+                } else {
+                  expdata.add(data[ind!]);
+                  mydata.put('key1', expdata);
+                }
+                _isSelected = true;
+              });
+            },
+            child: Container(
+              margin: EdgeInsets.only(right: 10),
+              padding: EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8),
+                border: Border.all(
+                  color: Colors.black,
+                ),
               ),
-            ),
-            child: Image.asset(
-              "./lib/icons/add-to-cart.png",
-              height: 25,
-              width: 25,
+              child: _isSelected != true
+                  ? Image.asset(
+                      "./lib/icons/add-to-cart.png",
+                      height: 25,
+                      width: 25,
+                    )
+                  : GestureDetector(
+                      onTap: () {
+                        Navigator.pushNamed(context, "/cart");
+                      },
+                      child: Image.asset(
+                        "./lib/icons/shopping-cart.png",
+                        height: 25,
+                        width: 25,
+                      ),
+                    ),
             ),
           ),
         ],
@@ -379,8 +407,9 @@ class _ContentpageState extends State<Contentpage> {
                             Container(
                               height: 150,
                               width: MediaQuery.of(context).size.width,
-                              margin: EdgeInsets.only(left: 50),
+                              // margin: EdgeInsets.only(left: 15),
                               child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   Icon(Icons.star),
                                   Icon(Icons.star),
@@ -466,6 +495,9 @@ class _ContentpageState extends State<Contentpage> {
                                   itemCount: data[ind!]["reviews"].length,
                                   itemBuilder: (context, index) {
                                     return ListTile(
+                                      shape: ContinuousRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10)),
                                       title: Column(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,

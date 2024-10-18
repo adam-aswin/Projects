@@ -33,8 +33,7 @@ class _DisplaypageState extends State<Displaypage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    // display();
-    blood();
+
     getData();
   }
 
@@ -46,21 +45,10 @@ class _DisplaypageState extends State<Displaypage> {
     print(cnt);
   }
 
-  // void display() async {
-
-  //   final prefs = await SharedPreferences.getInstance();
-  //   final res = prefs.getString("blood");
-  //   setState(() {
-  //     if (res != null) {
-  //       cnt = jsonDecode(res);
-  //     } else {
-  //       print("eroor");
-  //     }
-  //   });
-  // }
-
-  void blood() {
-    print(bloods);
+  void delete(String id) async {
+    var res =
+        await http.delete(Uri.parse('http://jandk.tech/api/deletedonor/${id}'));
+    getData();
   }
 
   @override
@@ -69,7 +57,7 @@ class _DisplaypageState extends State<Displaypage> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text(
-          "Doners",
+          "Donors",
           style: TextStyle(
             color: Colors.white,
           ),
@@ -110,9 +98,7 @@ class _DisplaypageState extends State<Displaypage> {
                       ),
                       DropdownButton(
                         onTap: () {
-                          setState(() {
-                            blood();
-                          });
+                          setState(() {});
                         },
                         icon: Icon(
                           Icons.arrow_drop_down_circle_outlined,
@@ -255,8 +241,10 @@ class _DisplaypageState extends State<Displaypage> {
                                           size: 20,
                                         ),
                                         onPressed: () {
+                                          String id =
+                                              cnt[index]["_id"].toString();
                                           Navigator.pushNamed(context, "/edit",
-                                              arguments: cnt[index]["_id"]);
+                                              arguments: id);
                                         },
                                       ),
                                     ),
@@ -277,7 +265,9 @@ class _DisplaypageState extends State<Displaypage> {
                                           color: Colors.red,
                                           size: 20,
                                         ),
-                                        onPressed: () {},
+                                        onPressed: () {
+                                          delete(cnt[index]["_id"]);
+                                        },
                                       ),
                                     ),
                                   ],
