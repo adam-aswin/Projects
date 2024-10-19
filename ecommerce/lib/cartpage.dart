@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:lottie/lottie.dart';
 
 class Cartpage extends StatefulWidget {
   const Cartpage({super.key});
@@ -26,6 +27,7 @@ class _CartpageState extends State<Cartpage> {
         null;
       }
     });
+    print(mydata.get('key1').runtimeType);
   }
 
   @override
@@ -35,6 +37,7 @@ class _CartpageState extends State<Cartpage> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         title: Text("My Cart"),
+        centerTitle: true,
       ),
       body: Column(
         children: [
@@ -42,235 +45,274 @@ class _CartpageState extends State<Cartpage> {
             child: Container(
               height: MediaQuery.of(context).size.height,
               width: MediaQuery.of(context).size.width,
-              child: Expanded(
-                child: ListView.builder(
-                  itemCount: data.length,
-                  itemBuilder: (context, index) {
-                    return Container(
-                      margin: EdgeInsets.only(top: 10),
-                      padding: EdgeInsets.only(top: 15),
-                      width: MediaQuery.of(context).size.width,
-                      height: 170,
-                      color: Colors.white,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            children: [
-                              Container(
-                                width: 80,
-                                height: 80,
-                                margin: EdgeInsets.only(left: 15, right: 15),
-                                color: Colors.grey[200],
-                                child: Image.network(
-                                  data[index]["images"][0],
-                                  fit: BoxFit.contain,
-                                ),
-                                // child: Text(data[ind!]["reviews"][index]["comment"]),
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  data[index]["brand"] != null
-                                      ? Text(
-                                          data[index]["brand"],
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        )
-                                      : Text(
-                                          "",
-                                          style: TextStyle(
-                                            fontSize: 0,
-                                          ),
-                                        ),
-                                  data[index]["brand"] != null
-                                      ? Container(
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              .7,
-                                          child: Text(
-                                            data[index]["description"],
-                                            maxLines: 2,
-                                            overflow: TextOverflow.ellipsis,
-                                            style: TextStyle(
-                                              fontSize: 13,
-                                              color: Colors.black87,
-                                            ),
-                                          ),
-                                        )
-                                      : Text(
-                                          data[index]["title"],
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                  data[index]["brand"] != null
-                                      ? Text(
-                                          "",
-                                          style: TextStyle(
-                                            fontSize: 0,
-                                          ),
-                                        )
-                                      : Container(
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              .7,
-                                          child: Text(
-                                            data[index]["description"],
-                                            style: TextStyle(
-                                              fontSize: 13,
-                                              color: Colors.black87,
-                                            ),
-                                            maxLines: 2,
-                                            overflow: TextOverflow.ellipsis,
-                                          ),
-                                        ),
-                                  SizedBox(
-                                    height: 10,
-                                  ),
-                                  Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Column(
-                                        children: [
-                                          Text(
-                                            "\$ ${data[index]["price"].toString()}",
-                                            style: TextStyle(
-                                              decoration:
-                                                  TextDecoration.lineThrough,
-                                              color: const Color.fromARGB(
-                                                  220, 0, 0, 0),
-                                              fontSize: 13.5,
-                                            ),
-                                          ),
-                                          Row(
-                                            children: [
-                                              Text(
-                                                "\$",
+              child: mydata.get('key1') == null
+                  ? Center(
+                      child: Text("Empty"),
+                    )
+                  : Expanded(
+                      child: ListView.builder(
+                        itemCount: data.length,
+                        itemBuilder: (context, index) {
+                          return Container(
+                            margin: EdgeInsets.only(top: 10),
+                            padding: EdgeInsets.only(top: 15),
+                            width: MediaQuery.of(context).size.width,
+                            height: 170,
+                            color: Colors.white,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  children: [
+                                    Container(
+                                      width: 80,
+                                      height: 80,
+                                      margin:
+                                          EdgeInsets.only(left: 15, right: 15),
+                                      color: Colors.grey[200],
+                                      child: Image.network(
+                                        data[index]["images"][0],
+                                        fit: BoxFit.contain,
+                                      ),
+                                      // child: Text(data[ind!]["reviews"][index]["comment"]),
+                                    ),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      children: [
+                                        data[index]["brand"] != null
+                                            ? Text(
+                                                data[index]["brand"],
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              )
+                                            : Text(
+                                                "",
+                                                style: TextStyle(
+                                                  fontSize: 0,
+                                                ),
+                                              ),
+                                        data[index]["brand"] != null
+                                            ? Container(
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    .7,
+                                                child: Text(
+                                                  data[index]["description"],
+                                                  maxLines: 2,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  style: TextStyle(
+                                                    fontSize: 13,
+                                                    color: Colors.black87,
+                                                  ),
+                                                ),
+                                              )
+                                            : Text(
+                                                data[index]["title"],
                                                 style: TextStyle(
                                                   fontWeight: FontWeight.bold,
                                                 ),
                                               ),
-                                              SizedBox(
-                                                width: 5,
-                                              ),
-                                              Container(
-                                                width: 40,
-                                                height: 20,
+                                        data[index]["brand"] != null
+                                            ? Text(
+                                                "",
+                                                style: TextStyle(
+                                                  fontSize: 0,
+                                                ),
+                                              )
+                                            : Container(
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    .7,
                                                 child: Text(
-                                                  "${(data[index]["price"] - (data[index]["price"] * (data[index]["discountPercentage"] / 100))).toString()}",
-                                                  overflow: TextOverflow.clip,
+                                                  data[index]["description"],
                                                   style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 13,
+                                                    color: Colors.black87,
                                                   ),
+                                                  maxLines: 2,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
                                                 ),
                                               ),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                      SizedBox(
-                                        width: 5,
-                                      ),
-                                      Container(
-                                        // margin: EdgeInsets.only(top: 35),
-                                        child: Text(
-                                          "↓${data[index]["discountPercentage"].toString()} %",
-                                          style: TextStyle(
-                                            color: Colors.green,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 16,
-                                          ),
+                                        SizedBox(
+                                          height: 10,
                                         ),
-                                      )
-                                    ],
-                                  )
-                                ],
-                              ),
-                            ],
-                          ),
-                          Container(
-                            height: 40,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                GestureDetector(
-                                  onTap: () {
-                                    setState(() {
-                                      data.removeAt(index);
-                                    });
-                                  },
+                                        Row(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: [
+                                            Column(
+                                              children: [
+                                                Text(
+                                                  "\$ ${data[index]["price"].toString()}",
+                                                  style: TextStyle(
+                                                    decoration: TextDecoration
+                                                        .lineThrough,
+                                                    color: const Color.fromARGB(
+                                                        220, 0, 0, 0),
+                                                    fontSize: 13.5,
+                                                  ),
+                                                ),
+                                                Row(
+                                                  children: [
+                                                    Text(
+                                                      "\$",
+                                                      style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      ),
+                                                    ),
+                                                    SizedBox(
+                                                      width: 5,
+                                                    ),
+                                                    Container(
+                                                      width: 40,
+                                                      height: 20,
+                                                      child: Text(
+                                                        "${(data[index]["price"] - (data[index]["price"] * (data[index]["discountPercentage"] / 100))).toString()}",
+                                                        overflow:
+                                                            TextOverflow.clip,
+                                                        style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                            SizedBox(
+                                              width: 5,
+                                            ),
+                                            Container(
+                                              // margin: EdgeInsets.only(top: 35),
+                                              child: Text(
+                                                "↓${data[index]["discountPercentage"].toString()} %",
+                                                style: TextStyle(
+                                                  color: Colors.green,
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 16,
+                                                ),
+                                              ),
+                                            )
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                                Container(
+                                  height: 40,
                                   child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
                                     children: [
-                                      TextButton(
-                                        onPressed: () {
+                                      GestureDetector(
+                                        onTap: () {
                                           setState(() {
                                             data.removeAt(index);
                                           });
                                         },
-                                        child: Text(
-                                          "Remove",
-                                          style: TextStyle(
-                                            color: Colors.black,
-                                          ),
+                                        child: Row(
+                                          children: [
+                                            TextButton(
+                                              onPressed: () {
+                                                setState(() {
+                                                  data.removeAt(index);
+                                                });
+                                              },
+                                              child: Text(
+                                                "Remove",
+                                                style: TextStyle(
+                                                  color: Colors.black,
+                                                ),
+                                              ),
+                                            ),
+                                            Icon(
+                                              Icons.delete,
+                                              color: Colors.black,
+                                              size: 18,
+                                            )
+                                          ],
                                         ),
                                       ),
-                                      Icon(
-                                        Icons.delete,
-                                        color: Colors.black,
-                                        size: 18,
-                                      )
+                                      VerticalDivider(),
+                                      Row(
+                                        children: [
+                                          TextButton(
+                                            onPressed: () {},
+                                            child: Text(
+                                              "Buy Now",
+                                              style: TextStyle(
+                                                color: Colors.black,
+                                              ),
+                                            ),
+                                          ),
+                                          Icon(
+                                            Icons.flash_on_rounded,
+                                            color: Colors.black,
+                                            size: 18,
+                                          )
+                                        ],
+                                      ),
                                     ],
                                   ),
-                                ),
-                                VerticalDivider(),
-                                Row(
-                                  children: [
-                                    TextButton(
-                                      onPressed: () {},
-                                      child: Text(
-                                        "Buy Now",
-                                        style: TextStyle(
-                                          color: Colors.black,
-                                        ),
-                                      ),
-                                    ),
-                                    Icon(
-                                      Icons.flash_on_rounded,
-                                      color: Colors.black,
-                                      size: 18,
-                                    )
-                                  ],
-                                ),
+                                )
                               ],
                             ),
-                          )
-                        ],
+                          );
+                        },
+                      ),
+                    ),
+            ),
+          ),
+          GestureDetector(
+            onTap: () {
+              setState(() {
+                mydata.put('key1', null);
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      backgroundColor: Colors.white,
+                      content: Lottie.asset(
+                        "./lib/Lottie/Animation - 1728035840351.json",
                       ),
                     );
                   },
-                ),
-              ),
-            ),
-          ),
-          Container(
-            alignment: Alignment.center,
-            width: MediaQuery.of(context).size.width,
-            height: 45,
-            color: Colors.amber,
-            child: Text(
-              "Place Order",
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 17,
-              ),
-            ),
+                );
+              });
+              Future.delayed(
+                Duration(seconds: 2),
+                () {
+                  Navigator.pushNamedAndRemoveUntil(
+                      context, "/first", (context) => false);
+                },
+              );
+            },
+            child: mydata.get('key1') != null
+                ? Container(
+                    alignment: Alignment.center,
+                    width: MediaQuery.of(context).size.width,
+                    height: 45,
+                    color: Colors.amber,
+                    child: Text(
+                      "Place Order",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 17,
+                      ),
+                    ),
+                  )
+                : Container(),
           ),
         ],
       ),

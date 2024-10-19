@@ -35,19 +35,7 @@ class _ContentpageState extends State<Contentpage> {
         backgroundColor: Colors.white,
         actions: [
           GestureDetector(
-            onTap: () {
-              setState(() {
-                if (mydata.get('key1') != null) {
-                  expdata = mydata.get('key1');
-                  expdata.add(data[ind!]);
-                  mydata.put('key1', expdata);
-                } else {
-                  expdata.add(data[ind!]);
-                  mydata.put('key1', expdata);
-                }
-                _isSelected = true;
-              });
-            },
+            onTap: () {},
             child: Container(
               margin: EdgeInsets.only(right: 10),
               padding: EdgeInsets.all(8),
@@ -58,10 +46,25 @@ class _ContentpageState extends State<Contentpage> {
                 ),
               ),
               child: _isSelected != true
-                  ? Image.asset(
-                      "./lib/icons/add-to-cart.png",
-                      height: 25,
-                      width: 25,
+                  ? GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          if (mydata.get('key1') != null) {
+                            expdata = mydata.get('key1');
+                            expdata.add(data[ind!]);
+                            mydata.put('key1', expdata);
+                          } else {
+                            expdata.add(data[ind!]);
+                            mydata.put('key1', expdata);
+                          }
+                          _isSelected = true;
+                        });
+                      },
+                      child: Image.asset(
+                        "./lib/icons/add-to-cart.png",
+                        height: 25,
+                        width: 25,
+                      ),
                     )
                   : GestureDetector(
                       onTap: () {
