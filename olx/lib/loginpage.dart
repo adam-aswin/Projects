@@ -1,6 +1,8 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:hive/hive.dart';
 import 'package:http/http.dart' as http;
 
 class Loginpage extends StatefulWidget {
@@ -15,6 +17,8 @@ class _LoginpageState extends State<Loginpage> {
   TextEditingController pass = TextEditingController();
   bool lock = true;
   Map data = {};
+  var mp;
+  final mydata = Hive.box('mydata');
 
   void saveData() async {
     data = {"email": email.text, "password": pass.text};
@@ -24,23 +28,26 @@ class _LoginpageState extends State<Loginpage> {
       body: jsonEncode(data),
     );
     // print(response.body);
-    var mp = jsonDecode(response.body);
-    print(mp["token"]);
+    mp = jsonDecode(response.body);
+    // print(mp["token"]);
     if (response.statusCode == 200) {
-      print("object");
+      mydata.put('key', mp["token"]);
+      print(mydata.get('key'));
+      Navigator.pushNamedAndRemoveUntil(context, "/home", (route) => false);
     } else {
-      Future.delayed(
-        Duration(seconds: 2),
-        () => showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return SimpleDialog(
-                backgroundColor: Color.fromARGB(255, 247, 255, 247),
-                alignment: Alignment.bottomCenter,
-                children: [Center(child: Text(mp["msg"]))],
-              );
-            }),
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(mp["msg"]),
+          duration: Duration(seconds: 2),
+        ),
       );
+      // Fluttertoast.showToast(
+      //     msg: mp["msg"],
+      //     toastLength: Toast.LENGTH_SHORT,
+      //     gravity: ToastGravity.BOTTOM,
+      //     backgroundColor: Colors.black,
+      //     textColor: Colors.white,
+      //     fontSize: 15.0);
     }
   }
 
