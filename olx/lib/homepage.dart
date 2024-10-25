@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
@@ -14,8 +15,9 @@ class Homepage extends StatefulWidget {
 class _HomepageState extends State<Homepage> {
   final mydata = Hive.box('mydata');
   Map data = {};
+  Map user = {};
   List products = [];
-  String? img;
+  Uint8List? img;
   @override
   void initState() {
     // TODO: implement initState
@@ -30,11 +32,18 @@ class _HomepageState extends State<Homepage> {
       headers: {"Authorization": 'Bearer ${token}'},
     );
     // print(response.body);
+
     setState(() {
       data = jsonDecode(response.body);
+      // print(data['id']);
       products = data["products1"];
     });
-    print(products);
+    var res = await http
+        .get(Uri.parse('http://jandk.tech/api/getuser/${data['id']}'));
+    setState(() {
+      user = jsonDecode(res.body);
+    });
+    print(user);
   }
 
   @override
@@ -42,10 +51,31 @@ class _HomepageState extends State<Homepage> {
     return Scaffold(
       backgroundColor: const Color.fromARGB(242, 255, 255, 255),
       appBar: AppBar(
-        backgroundColor: Colors.grey[400],
+        backgroundColor: Colors.green[300],
       ),
       drawer: Drawer(
-        backgroundColor: Colors.grey[400],
+        backgroundColor: Colors.green[300],
+        child: Column(
+          children: [
+            SizedBox(
+              height: 50,
+            ),
+            Container(
+              width: 100,
+              height: 100,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(100),
+                color: Colors.green[100],
+              ),
+              // child: ClipOval(
+              //   child: Image.memory(
+              //     img = base64Decode(user["profile"]),
+              //     fit: BoxFit.contain,
+              //   ),
+              // ),
+            ),
+          ],
+        ),
       ),
       body: Container(
           width: MediaQuery.of(context).size.width,
@@ -54,10 +84,11 @@ class _HomepageState extends State<Homepage> {
             padding: EdgeInsets.only(top: 30, left: 15, right: 15, bottom: 15),
             itemCount: products.length,
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                childAspectRatio: 2.3 / 3,
-                crossAxisSpacing: 10,
-                mainAxisSpacing: 10),
+              crossAxisCount: 2,
+              childAspectRatio: 2.3 / 3,
+              crossAxisSpacing: 5,
+              mainAxisSpacing: 5,
+            ),
             itemBuilder: (context, index) {
               return Container(
                 padding: EdgeInsets.all(10),
@@ -80,12 +111,14 @@ class _HomepageState extends State<Homepage> {
                       height: 130,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
-                        color: Colors.grey[300],
+                        color: Colors.green[100],
                       ),
-                      child: Image.asset(
-                        ,
-                        fit: BoxFit.contain,
-                      ),
+                      child: products[index]["images"] != null
+                          ? Image.memory(
+                            base64Decode(products[index]["images"][0]),
+                              fit: BoxFit.contain,
+                            )
+                          : Text(""),
                     ),
                     Text(
                       products[index]["pname"],
