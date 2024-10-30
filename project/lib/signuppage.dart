@@ -52,6 +52,7 @@ class _SignuppageState extends State<Signuppage> {
                           color: Colors.white,
                         ),
                         child: TextField(
+                          cursorColor: Colors.black,
                           keyboardType: TextInputType.name,
                           decoration: InputDecoration(
                             enabledBorder: OutlineInputBorder(
@@ -79,7 +80,8 @@ class _SignuppageState extends State<Signuppage> {
                           color: Colors.white,
                         ),
                         child: TextField(
-                          keyboardType: TextInputType.name,
+                          cursorColor: Colors.black,
+                          keyboardType: TextInputType.emailAddress,
                           decoration: InputDecoration(
                             enabledBorder: OutlineInputBorder(
                               borderSide: BorderSide.none,
@@ -106,7 +108,8 @@ class _SignuppageState extends State<Signuppage> {
                           color: Colors.white,
                         ),
                         child: TextField(
-                          keyboardType: TextInputType.name,
+                          cursorColor: Colors.black,
+                          keyboardType: TextInputType.number,
                           decoration: InputDecoration(
                             enabledBorder: OutlineInputBorder(
                               borderSide: BorderSide.none,
@@ -133,6 +136,7 @@ class _SignuppageState extends State<Signuppage> {
                           color: Colors.white,
                         ),
                         child: TextField(
+                          cursorColor: Colors.black,
                           obscureText: obs,
                           decoration: InputDecoration(
                             enabledBorder: OutlineInputBorder(
@@ -173,7 +177,7 @@ class _SignuppageState extends State<Signuppage> {
                           color: Colors.white,
                         ),
                         child: TextField(
-                          keyboardType: TextInputType.name,
+                          cursorColor: Colors.black,
                           decoration: InputDecoration(
                             enabledBorder: OutlineInputBorder(
                               borderSide: BorderSide.none,
@@ -195,7 +199,10 @@ class _SignuppageState extends State<Signuppage> {
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.black,
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pushNamedAndRemoveUntil(
+                              context, "/login", (route) => false);
+                        },
                         child: Text(
                           "Sign up",
                           style: TextStyle(

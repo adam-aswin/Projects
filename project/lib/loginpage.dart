@@ -52,6 +52,7 @@ class _LoginpageState extends State<Loginpage> {
                           color: Colors.white,
                         ),
                         child: TextField(
+                          cursorColor: Colors.black,
                           keyboardType: TextInputType.name,
                           decoration: InputDecoration(
                             enabledBorder: OutlineInputBorder(
@@ -79,6 +80,7 @@ class _LoginpageState extends State<Loginpage> {
                           color: Colors.white,
                         ),
                         child: TextField(
+                          cursorColor: Colors.black,
                           obscureText: obs,
                           decoration: InputDecoration(
                             enabledBorder: OutlineInputBorder(
@@ -123,7 +125,9 @@ class _LoginpageState extends State<Loginpage> {
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.black,
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pushNamed(context, "/home");
+                        },
                         child: Text(
                           "Login",
                           style: TextStyle(
@@ -132,7 +136,7 @@ class _LoginpageState extends State<Loginpage> {
                         ),
                       ),
                       SizedBox(
-                        height: MediaQuery.of(context).size.height * .25,
+                        height: MediaQuery.of(context).size.height * .24,
                       ),
                       Center(
                         child: TextButton(
