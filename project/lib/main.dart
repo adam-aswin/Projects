@@ -12,6 +12,10 @@ void main() async {
   runApp(
     MaterialApp(
       home: Mainpage(),
+      routes: {
+        "/sign": (context) => Signuppage(),
+        "/main": (context) => Mainpage(),
+      },
     ),
   );
 }

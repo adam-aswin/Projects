@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -9,8 +10,15 @@ class Homepage extends StatefulWidget {
 }
 
 class _HomepageState extends State<Homepage> {
+  TextEditingController _task = TextEditingController();
+  CollectionReference Todos = FirebaseFirestore.instance.collection("Todos");
   Future logout() async {
     await FirebaseAuth.instance.signOut();
+  }
+
+  void addData() {
+    final data = {"task": _task.text};
+    Todos.add(data);
   }
 
   void addTask() {
@@ -23,6 +31,7 @@ class _HomepageState extends State<Homepage> {
           ),
           backgroundColor: Colors.grey[350],
           content: TextField(
+            controller: _task,
             cursorColor: Colors.black,
             decoration: InputDecoration(
               enabledBorder: OutlineInputBorder(
@@ -49,7 +58,7 @@ class _HomepageState extends State<Homepage> {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   )),
-              onPressed: () {},
+              onPressed: addData,
               child: Text(
                 "Save",
                 style: TextStyle(
